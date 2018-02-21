@@ -9,23 +9,23 @@ public class BikeController : MonoBehaviour {
     [SerializeField]
     private GameObject _backWheel;
 
-    public const float MAX_SPEED = 500;
+    public float MAX_SPEED = 1000;
     public float rotationSpeed;    
 
 	void Update () {
         if(Input.GetKey(KeyCode.W))
         {
-            if (rotationSpeed + 5 > MAX_SPEED)
+            if (rotationSpeed + 10f > MAX_SPEED)
                 rotationSpeed = MAX_SPEED;
             else
-                rotationSpeed += 5f;
+                rotationSpeed += 10f;
         }
         else if(Input.GetKey(KeyCode.S))
         {
-            if (Mathf.Abs(rotationSpeed) + 5 > MAX_SPEED)
+            if (Mathf.Abs(rotationSpeed) + 10f > MAX_SPEED)
                 rotationSpeed = -MAX_SPEED;
             else
-                rotationSpeed -= 5f;
+                rotationSpeed -= 10f;
         }
         else if(rotationSpeed != 0)
         {
