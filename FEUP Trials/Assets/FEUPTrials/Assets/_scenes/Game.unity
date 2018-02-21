@@ -122,6 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1151332158}
   - component: {fileID: 1151332157}
+  - component: {fileID: 1151332159}
   m_Layer: 0
   m_Name: Front Wheel
   m_TagString: Untagged
@@ -186,6 +187,21 @@ Transform:
   m_Father: {fileID: 1869790000}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -60.34}
+--- !u!58 &1151332159
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1151332156}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.63000005
 --- !u!1 &1682054439
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,6 +293,8 @@ GameObject:
   - component: {fileID: 1869790000}
   - component: {fileID: 1869789999}
   - component: {fileID: 1869789998}
+  - component: {fileID: 1869790002}
+  - component: {fileID: 1869790001}
   m_Layer: 0
   m_Name: Bike
   m_TagString: Untagged
@@ -358,6 +376,141 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &1869790001
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1869789997}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 3.33, y: 1.64}
+    newSize: {x: 3.33, y: 1.64}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.105, y: -0.77}
+      - {x: 0.305, y: -0.75}
+      - {x: 0.375, y: -0.79999995}
+      - {x: 0.835, y: -0.81}
+      - {x: 0.865, y: -0.78}
+      - {x: 0.965, y: -0.59}
+      - {x: 1.0749999, y: -0.64}
+      - {x: 1.135, y: -0.65999997}
+      - {x: 1.285, y: -0.71999997}
+      - {x: 1.485, y: -0.82}
+      - {x: 1.655, y: -0.82}
+      - {x: 1.665, y: -0.81}
+      - {x: 1.665, y: -0.66999996}
+      - {x: 1.615, y: -0.55}
+      - {x: 1.375, y: 0.14}
+      - {x: 1.3349999, y: 0.25}
+      - {x: 1.435, y: 0.35}
+      - {x: 1.395, y: 0.48999998}
+      - {x: 1.275, y: 0.59}
+      - {x: 1.3149999, y: 0.71}
+      - {x: 1.305, y: 0.82}
+      - {x: 1.0749999, y: 0.82}
+      - {x: 1.055, y: 0.78}
+      - {x: 1.045, y: 0.72999996}
+      - {x: 1.145, y: 0.65999997}
+      - {x: 1.125, y: 0.56}
+      - {x: 1.095, y: 0.51}
+      - {x: 0.865, y: 0.53999996}
+      - {x: 0.805, y: 0.53999996}
+      - {x: 0.59499997, y: 0.38}
+      - {x: 0.545, y: 0.39}
+      - {x: 0.375, y: 0.37}
+      - {x: -0.044999998, y: 0.31}
+      - {x: -0.145, y: 0.45999998}
+      - {x: -0.235, y: 0.53999996}
+      - {x: -0.275, y: 0.53999996}
+      - {x: -0.415, y: 0.45999998}
+      - {x: -0.92499995, y: 0.52}
+      - {x: -1.5649999, y: 0.62}
+      - {x: -1.665, y: 0.59999996}
+      - {x: -1.665, y: 0.51}
+      - {x: -1.655, y: 0.48999998}
+      - {x: -1.375, y: 0.35}
+      - {x: -1.355, y: 0.26999998}
+      - {x: -1.3249999, y: 0.22999999}
+      - {x: -1.185, y: 0.14999999}
+      - {x: -1.095, y: 0.17}
+      - {x: -1.0749999, y: 0.21}
+      - {x: -0.805, y: 0.02}
+      - {x: -0.865, y: -0.049999997}
+      - {x: -1.0649999, y: -0.32999998}
+      - {x: -1.3349999, y: -0.65}
+      - {x: -1.415, y: -0.7}
+      - {x: -1.415, y: -0.79999995}
+      - {x: -1.395, y: -0.82}
+      - {x: -0.775, y: -0.82}
+      - {x: -0.515, y: -0.79999995}
+      - {x: -0.345, y: -0.78999996}
+      - {x: -0.185, y: -0.78}
+    - - {x: -1.105, y: -0.74}
+      - {x: -1.0749999, y: -0.71999997}
+      - {x: -1.0649999, y: -0.71}
+      - {x: -1.035, y: -0.71}
+      - {x: -0.945, y: -0.7}
+      - {x: -0.66499996, y: -0.63}
+      - {x: 0.125, y: -0.61}
+      - {x: 0.145, y: -0.59999996}
+      - {x: 0.185, y: -0.65}
+      - {x: 0.205, y: -0.65}
+      - {x: 0.175, y: -0.64}
+      - {x: -0.225, y: -0.65}
+      - {x: -0.895, y: -0.69}
+      - {x: -0.895, y: -0.71}
+      - {x: -1.0749999, y: -0.71}
+      - {x: -1.175, y: -0.71999997}
+      - {x: -1.225, y: -0.74}
+      - {x: -1.2149999, y: -0.76}
+    - - {x: 1.4549999, y: -0.59999996}
+      - {x: 1.4449999, y: -0.59}
+      - {x: 1.415, y: -0.58}
+      - {x: 1.295, y: -0.53}
+      - {x: 1.235, y: -0.51}
+      - {x: 1.175, y: -0.02}
+      - {x: 1.2049999, y: 0.01}
+      - {x: 1.1949999, y: 0.01}
+      - {x: 1.2149999, y: -0.02}
+      - {x: 1.2149999, y: -0.04}
+      - {x: 1.3149999, y: -0.26999998}
+      - {x: 1.425, y: -0.52}
+      - {x: 1.475, y: -0.61}
+      - {x: 1.475, y: -0.59999996}
+--- !u!50 &1869790002
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1869789997}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &2059578298
 GameObject:
   m_ObjectHideFlags: 0
@@ -367,6 +520,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2059578300}
   - component: {fileID: 2059578299}
+  - component: {fileID: 2059578301}
   m_Layer: 0
   m_Name: Back Wheel
   m_TagString: Untagged
@@ -431,3 +585,18 @@ Transform:
   m_Father: {fileID: 1869790000}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &2059578301
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2059578298}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.63
