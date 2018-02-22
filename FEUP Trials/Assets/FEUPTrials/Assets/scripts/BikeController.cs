@@ -5,12 +5,14 @@ using UnityEngine;
 public class BikeController : MonoBehaviour {
     [SerializeField]
     private WheelJoint2D _frontWheel;
-
     [SerializeField]
     private WheelJoint2D _backWheel;
 
     public float maxSpeed = 1000;
-    public float speed;
+    // Acceleration (in force) per second
+    public float forceAcceleration = 500;
+    // Motor force
+    public float motorFoce;
 
     private void Start()
     {
@@ -28,36 +30,27 @@ public class BikeController : MonoBehaviour {
     }
 
     void Update () {
-        // --
-        // Remove this
-        if(Input.GetKey(KeyCode.D))
-        {
-            if (speed + 10f > maxSpeed)
-                speed = maxSpeed;
-            else
-                speed += 10f;
-        }
-        else if(Input.GetKey(KeyCode.A))
-        {
-            if (Mathf.Abs(speed) + 10f > maxSpeed)
-                speed = -maxSpeed;
-            else
-                speed -= 10f;
-        }
-        else if(speed != 0)
-        {
-            if(Mathf.Abs(speed) - 5f < 0)
-                speed = 0;
-            else if (speed > 0)
-                speed -= 5f;
-            else if(speed < 0)
-                speed += 5f;
-        }
-        // --
-
-        SetMotorSpeed(speed);
+        UpdateMotorForce();
     }
 
+    void UpdateMotorForce()
+    {
+        // --
+        // Remove this
+        if (Input.GetKey(KeyCode.D))
+        {
+            // Move forward OR brake
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            // Move backwards OR brake
+        }
+        // --
+
+        SetMotorSpeed(motorFoce);
+    }
+
+    // Negative speed should move the player backwards, but moves forward
     void SetMotorSpeed(float speed)
     {
         JointMotor2D motor = _backWheel.motor;
