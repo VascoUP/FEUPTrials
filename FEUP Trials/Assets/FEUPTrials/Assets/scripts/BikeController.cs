@@ -12,7 +12,7 @@ public class BikeController : MonoBehaviour {
     // Acceleration (in force) per second
     public float forceAcceleration = 500;
     // Motor force
-    public float motorFoce;
+    public float motorForce;
 
     private void Start()
     {
@@ -31,23 +31,49 @@ public class BikeController : MonoBehaviour {
 
     void Update () {
         UpdateMotorForce();
+        //UpdateRotation();
     }
 
     void UpdateMotorForce()
     {
-        // --
-        // Remove this
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.W))
         {
             // Move forward OR brake
+            motorForce += forceAcceleration * Time.deltaTime;
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.S))
         {
             // Move backwards OR brake
+            motorForce -= forceAcceleration * Time.deltaTime;
         }
-        // --
+        /*else
+        {
+            float signal = (motorForce / Mathf.Abs(motorForce));
+            float force = Mathf.Abs(motorForce) - forceAcceleration;
+            if((force >= 0 && motorForce < 0) || (force <= 0 && motorForce > 0))
+            {
+                force = 0;
+            }
+            else
+            {
+                motorForce = signal * force;
+            }
+        }*/
 
-        SetMotorSpeed(motorFoce);
+        SetMotorSpeed(motorForce);
+    }
+
+    void UpdateRotation()
+    {
+        if (Input.GetKey(KeyCode.A))
+        {
+            // Rotate with positive angle
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            // Rotate with negative angle
+        }
+
     }
 
     // Negative speed should move the player backwards, but moves forward
