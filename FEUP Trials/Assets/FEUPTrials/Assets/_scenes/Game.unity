@@ -137,7 +137,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1137232507}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 013b75d115156b24b9e57a6848b81576, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -162,7 +162,7 @@ Transform:
   m_GameObject: {fileID: 1137232507}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: -2.12, z: 0}
-  m_LocalScale: {x: 7.03, y: 1, z: 1}
+  m_LocalScale: {x: 100, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 1151332161}
   m_Layer: 0
   m_Name: Front Wheel
-  m_TagString: Untagged
+  m_TagString: FrontWheel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -270,7 +270,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 20
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 50
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -392,8 +392,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _frontWheel: {fileID: 1151332156}
   _backWheel: {fileID: 2059578298}
-  MAX_SPEED: 1000
-  rotationSpeed: 0
+  maxSpeed: 1000
+  speed: 0
 --- !u!212 &1869789999
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -445,7 +445,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1869789997}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.402, y: 15.18, z: 0}
+  m_LocalPosition: {x: 0.402, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1151332158}
@@ -647,7 +647,7 @@ GameObject:
   - component: {fileID: 2059578303}
   m_Layer: 0
   m_Name: Back Wheel
-  m_TagString: Untagged
+  m_TagString: BackWheel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -737,7 +737,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 20
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 50
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
