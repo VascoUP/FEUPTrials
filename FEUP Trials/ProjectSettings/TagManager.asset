@@ -6,6 +6,7 @@ TagManager:
   tags:
   - FrontWheel
   - BackWheel
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
