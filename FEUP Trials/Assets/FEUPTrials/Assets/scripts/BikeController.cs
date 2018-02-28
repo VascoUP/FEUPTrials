@@ -20,6 +20,8 @@ public class BikeController : MonoBehaviour {
     public float forceAcceleration = 500;
     // Motor force
     public float motorForce;
+    // Rotation force
+    public float rotationForce;
     // Velocity at which the bike needs to be to brake
     public float velocityThereshold;
 
@@ -76,6 +78,7 @@ public class BikeController : MonoBehaviour {
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.gameObject.GetComponent<Collider2D>());
         }
     }
+
 
     private float DirectionalVelocity()
     {
@@ -181,11 +184,15 @@ public class BikeController : MonoBehaviour {
     {
         if (Input.GetKey(KeyCode.A))
         {
+            Debug.Log("Add torque");
             // Rotate with positive angle
+            _bikeRB.AddTorque(Time.deltaTime * rotationForce, ForceMode2D.Impulse);
         }
         else if (Input.GetKey(KeyCode.D))
         {
+            Debug.Log("Add torque");
             // Rotate with negative angle
+            _bikeRB.AddTorque(-1 * Time.deltaTime * rotationForce, ForceMode2D.Impulse);
         }
 
     }
@@ -209,11 +216,12 @@ public class BikeController : MonoBehaviour {
         return false;
     }
 
+
     void Update()
     {
         if (IsResetToCheckpoint())
             return;
         UpdateMotorForce();
-        //UpdateRotation();
+        UpdateRotation();
     }
 }
