@@ -64,6 +64,7 @@ public class BikeController : MonoBehaviour {
             if (c != null && !c.active)
             {
                 _checkpoint = c;
+                _checkpoint.ActivateCheckpoint();
             }
         }
     }

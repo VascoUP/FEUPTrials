@@ -13,4 +13,13 @@ public class Checkpoint : MonoBehaviour {
     {
         return transform.position + _spawnOffset;
     }
+
+    public void ActivateCheckpoint()
+    {
+        Animator animator = GetComponent<Animator>();
+        if (animator != null)
+            animator.Play("CheckpointAnimation");
+        else
+            Debug.Log("null animator");
+    }
 }
