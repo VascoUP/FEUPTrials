@@ -1,17 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class BikeController : MonoBehaviour {
-    [SerializeField]
-    private GameObject _checkpointGameObject;
-    private Checkpoint _checkpoint;
+public class BikeController : MonoBehaviour
+{
+    private GameManager _gameManager;
 
     private Rigidbody2D _bikeRB;
     private WheelJoint2D _frontWheel;
     private Rigidbody2D _frontWheelRB;
     private WheelJoint2D _backWheel;
     private Rigidbody2D _backWheelRB;
+    
+    private bool _isActive = true;
 
     public AnimationCurve forceCurve;
     private float _accelerationTime = 0;
@@ -34,8 +33,7 @@ public class BikeController : MonoBehaviour {
 
     private void Start()
     {
-        _checkpoint = _checkpointGameObject.GetComponent<Checkpoint>();
-
+        _gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         _bikeRB = GetComponent<Rigidbody2D>();
 
         WheelJoint2D[] wheelJoints = GetComponents<WheelJoint2D>();
@@ -65,8 +63,7 @@ public class BikeController : MonoBehaviour {
             Checkpoint c = collision.gameObject.GetComponent<Checkpoint>();
             if (c != null && !c.active)
             {
-                _checkpoint = c;
-                _checkpoint.ActivateCheckpoint();
+                _gameManager.SetCheckpoint(c);
             }
         }
     }
@@ -79,7 +76,7 @@ public class BikeController : MonoBehaviour {
         }
     }
 
-
+    
     private float DirectionalVelocity()
     {
         float velocity = Mathf.Cos(transform.rotation.z) * _bikeRB.velocity.x + Mathf.Sin(transform.rotation.z) * _bikeRB.velocity.y;
@@ -107,12 +104,12 @@ public class BikeController : MonoBehaviour {
         _backWheelRB.drag = angularDrag;
     }
 
-    bool ActivateMotor()
+    private bool ActivateMotor()
     {
         return _backWheel.useMotor || !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S));
     }
 
-    void UpdateUseMotor()
+    private void UpdateUseMotor()
     {
         if (ActivateMotor())
             _backWheel.useMotor = true;
@@ -120,7 +117,7 @@ public class BikeController : MonoBehaviour {
             _backWheel.useMotor = false;
     }
 
-    void UpdateMotorSpeed(float speed)
+    private void UpdateMotorSpeed(float speed)
     {
         if (!_backWheel.useMotor)
             return;
@@ -133,7 +130,7 @@ public class BikeController : MonoBehaviour {
         _backWheel.motor = motor;
     }
 
-    void CalculateMotorForce()
+    private void CalculateMotorForce()
     {
         if (Input.GetKey(KeyCode.W))
         {
@@ -173,55 +170,50 @@ public class BikeController : MonoBehaviour {
         }
     }
 
-    void UpdateMotorForce()
+    private void UpdateMotorForce()
     {
         UpdateUseMotor();
         CalculateMotorForce();
         UpdateMotorSpeed(motorForce);
     }
-    
-    void UpdateRotation()
+
+    private void UpdateRotation()
     {
         if (Input.GetKey(KeyCode.A))
         {
-            Debug.Log("Add torque");
             // Rotate with positive angle
             _bikeRB.AddTorque(Time.deltaTime * rotationForce, ForceMode2D.Impulse);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            Debug.Log("Add torque");
             // Rotate with negative angle
             _bikeRB.AddTorque(-1 * Time.deltaTime * rotationForce, ForceMode2D.Impulse);
         }
 
     }
-    
-    bool IsResetToCheckpoint()
-    {
-        if(Input.GetKeyUp(KeyCode.R))
-        {
-            // Translate the bike
-            transform.position = _checkpoint.BikeNewPosition();
-            transform.rotation = Quaternion.identity;
 
-            // Complete reset
-            _bikeRB.velocity = new Vector3(0, 0, 0);
-            _bikeRB.rotation = 0;
-            _accelerationTime = 0;
-            motorForce = 0;
-            _braking = false;
-            return true;
-        }
-        return false;
+    private void ResetBikeValues()
+    {
+        _accelerationTime = 0;
+        motorForce = 0;
+        _braking = false;
+        UpdateMotorSpeed(0f);
     }
 
 
-    void Update()
+    private void Update()
     {
-        if (IsResetToCheckpoint())
-            return;
+        if (!_isActive)
+            return; 
+        
         UpdateMotorForce();
         UpdateRotation();
+    }
+
+
+    public void StopMotion()
+    {
+        _isActive = false;
+        ResetBikeValues();
     }
 }

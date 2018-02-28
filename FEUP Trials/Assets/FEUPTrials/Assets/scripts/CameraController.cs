@@ -7,8 +7,17 @@ public class CameraController : MonoBehaviour {
     private GameObject _playerObject;
 
     public Vector3 offset;
-    	
-	void LateUpdate () {
-        transform.position = _playerObject.transform.position + offset;
+
+    private void LateUpdate ()
+    {
+        if (_playerObject != null)
+        {
+            transform.position = _playerObject.transform.position + offset;
+        }
+    }
+
+    public void SetPlayerObject(GameObject player)
+    {
+        _playerObject = player;
     }
 }

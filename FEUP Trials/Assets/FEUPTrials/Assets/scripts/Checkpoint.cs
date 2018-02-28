@@ -18,7 +18,7 @@ public class Checkpoint : MonoBehaviour {
     {
         Animator animator = GetComponent<Animator>();
         if (animator != null)
-            animator.Play("CheckpointAnimation");
+            animator.Play("Activate");
         else
             Debug.Log("null animator");
     }

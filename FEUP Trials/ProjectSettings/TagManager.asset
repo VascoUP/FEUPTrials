@@ -7,6 +7,8 @@ TagManager:
   - FrontWheel
   - BackWheel
   - Checkpoint
+  - Body
+  - Bike
   layers:
   - Default
   - TransparentFX
