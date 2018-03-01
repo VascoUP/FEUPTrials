@@ -48,9 +48,9 @@ public class BikeController : MonoBehaviour
         if (_backWheel == null || _frontWheel == null)
             Debug.LogError("Null wheel");
 
-        _frontWheelRB = _frontWheel.GetComponent<Rigidbody2D>();
+        _frontWheelRB = _frontWheel.connectedBody.gameObject.GetComponent<Rigidbody2D>();
         _frontWheelRB.angularDrag = angularDrag;
-        _backWheelRB = _backWheel.GetComponent<Rigidbody2D>();
+        _backWheelRB = _backWheel.connectedBody.gameObject.GetComponent<Rigidbody2D>();
         _backWheelRB.angularDrag = angularDrag;
 
         _backWheel.useMotor = false;
@@ -90,8 +90,8 @@ public class BikeController : MonoBehaviour
         _backWheel.useMotor = false;
         motorForce = 0;
         
-        _frontWheelRB.drag = brakeForce;
-        _backWheelRB.drag = brakeForce;
+        _frontWheelRB.angularDrag = brakeForce;
+        _backWheelRB.angularDrag = brakeForce;
     }
 
     private void StopBrake()
@@ -100,8 +100,8 @@ public class BikeController : MonoBehaviour
 
         _backWheel.useMotor = true;
 
-        _frontWheelRB.drag = angularDrag;
-        _backWheelRB.drag = angularDrag;
+        _frontWheelRB.angularDrag = angularDrag;
+        _backWheelRB.angularDrag = angularDrag;
     }
 
     private bool ActivateMotor()
@@ -122,8 +122,8 @@ public class BikeController : MonoBehaviour
         if (!_backWheel.useMotor)
             return;
 
-        _frontWheelRB.drag = angularDrag;
-        _backWheelRB.drag = angularDrag;
+        _frontWheelRB.angularDrag = angularDrag;
+        _backWheelRB.angularDrag = angularDrag;
 
         JointMotor2D motor = _backWheel.motor;
         motor.motorSpeed = -speed;
