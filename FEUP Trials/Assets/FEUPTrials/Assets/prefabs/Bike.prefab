@@ -325,7 +325,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1b5b2c68e62d64499bc66e37fd7885d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _checkpointGameObject: {fileID: 0}
   forceCurve:
     serializedVersion: 2
     m_Curve:
@@ -370,7 +369,7 @@ MonoBehaviour:
     m_RotationOrder: 0
   forceAcceleration: 850
   motorForce: 0
-  rotationForce: 2500
+  rotationForce: 3000
   velocityThereshold: 0
   brakeForce: 500
   angularDrag: 0.5

@@ -36,6 +36,7 @@ GameObject:
   - component: {fileID: 4933283457050256}
   - component: {fileID: 212754576907975976}
   - component: {fileID: 114789494320632874}
+  - component: {fileID: 114242350510056826}
   - component: {fileID: 60547168394477692}
   - component: {fileID: 50492345653003808}
   - component: {fileID: 233919323281254160}
@@ -56,7 +57,7 @@ GameObject:
   - component: {fileID: 4716420959367018}
   - component: {fileID: 212664746048271716}
   - component: {fileID: 114857278289957074}
-  - component: {fileID: 114122071150020470}
+  - component: {fileID: 114399486411715540}
   - component: {fileID: 60833114226657118}
   - component: {fileID: 50563507472454232}
   - component: {fileID: 233587684547780134}
@@ -577,7 +578,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.75, y: 0.75}
   m_EdgeRadius: 0
---- !u!114 &114122071150020470
+--- !u!114 &114242350510056826
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1163632575907282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf63f9b5910ab494a81a0fb6ebbbe453, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _anchor: {x: 0.3522028, y: 0.05490421}
+  _connectedAnchor: {x: 0.2217394, y: 537326}
+  _breakForce: 1e+10
+  _breakTorque: 1e+10
+--- !u!114 &114399486411715540
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -588,7 +604,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf63f9b5910ab494a81a0fb6ebbbe453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addHinge: 1
+  _anchor: {x: 0.3573515, y: 0.06529713}
+  _connectedAnchor: {x: 1.177351, y: 2.365297}
+  _breakForce: 1e+10
+  _breakTorque: 1e+10
 --- !u!114 &114748292659598460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -952,7 +971,7 @@ HingeJoint2D:
   serializedVersion: 4
   m_EnableCollision: 0
   m_ConnectedRigidBody: {fileID: 50847656275346512}
-  m_BreakForce: 5000
+  m_BreakForce: 7500
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: -0.2575181, y: -0.01}

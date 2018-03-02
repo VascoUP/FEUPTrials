@@ -9,6 +9,7 @@ TagManager:
   - Checkpoint
   - Body
   - Bike
+  - InteractionCollider
   layers:
   - Default
   - TransparentFX
