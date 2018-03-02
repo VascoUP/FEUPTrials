@@ -2,9 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LowerArmScript : MonoBehaviour {
-
-    public bool addHinge = true;
+public class ConnectToBike : MonoBehaviour {
+    [SerializeField]
+    private Vector2 _anchor;
+    [SerializeField]
+    private Vector2 _connectedAnchor;
+    [SerializeField]
+    private float _breakForce;
+    [SerializeField]
+    private float _breakTorque;
 
     private void Start()
     {
@@ -18,11 +24,12 @@ public class LowerArmScript : MonoBehaviour {
 
     private void AddNewHingeJoint(GameObject bike)
     {
-        addHinge = false;
         HingeJoint2D hj = gameObject.AddComponent<HingeJoint2D>();
         hj.connectedBody = bike.GetComponent<Rigidbody2D>();
         hj.autoConfigureConnectedAnchor = true;
-        hj.anchor = new Vector2(0.398f, 0.104f);
-        hj.connectedAnchor = new Vector2(1.218f, 0.764f);
+        hj.anchor = new Vector2(_anchor.x, _anchor.y);
+        hj.connectedAnchor = new Vector2(_connectedAnchor.x, _connectedAnchor.y);
+        hj.breakForce = _breakForce;
+        hj.breakTorque = _breakTorque;
     }
 }
