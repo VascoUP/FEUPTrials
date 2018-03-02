@@ -1269,7 +1269,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1791626751}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!68 &593766877
 EdgeCollider2D:
@@ -2510,7 +2510,7 @@ Transform:
   - {fileID: 483938618}
   - {fileID: 407842548}
   m_Father: {fileID: 1791626751}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1682054439
 GameObject:
@@ -2911,8 +2911,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 593766876}
   - {fileID: 1675946783}
+  - {fileID: 593766876}
   - {fileID: 74363675}
   - {fileID: 738871541}
   - {fileID: 154583426}
