@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class PlayerManager : MonoBehaviour
 {
     public bool isToRestart = false;
 
@@ -32,23 +32,27 @@ public class GameManager : MonoBehaviour
     private void Restart()
     {
         // Destroy both player and bike game objects
-        GameObject tmp = GameObject.Find("Player Body");
-        if(tmp != null)
+        GameObject tmp = Utils.FilterTaggedObjectByParentAndName("Body", "Player Body", transform.parent.name);
+        if (tmp != null)
             Destroy(tmp);
-        tmp = GameObject.Find("Bike");
+        tmp = Utils.FilterTaggedObjectByParent("Bike", transform.parent.name);
         if (tmp != null)
             Destroy(tmp);
 
         // Instantiate bike
         activeBike = Instantiate(_bikePrefab);
         activeBike.name = "Bike";
+        activeBike.transform.parent = transform.parent;
         activeBike.transform.position = _checkpoint.BikeNewPosition();
         _cameraController.SetPlayerObject(activeBike);
+        Utils.SetLayer(activeBike.transform, gameObject.layer);
 
         // Instantiate player
         tmp = Instantiate(_playerPrefab);
         tmp.name = "Player Body";
+        tmp.transform.parent = transform.parent;
         tmp.transform.position = _checkpoint.BikeNewPosition();
+        Utils.SetLayer(tmp.transform, gameObject.layer);
     }
 
     public void SetCheckpoint(Checkpoint checkpoint)

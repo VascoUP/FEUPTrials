@@ -7,17 +7,15 @@ public class BodyPartController : MonoBehaviour
 
     private void Start()
     {
-        GameObject gameMan = GameObject.Find("Game Manager");
-        if (gameMan == null)
-            return;
+        GameObject playerManagerGameObject = Utils.FilterTaggedObjectByParent("PlayerManager", transform.parent.parent.name);
+        if (playerManagerGameObject == null)
+            Debug.LogError("Null player manager game object");
 
-        GameManager gameManScript = gameMan.GetComponent<GameManager>();
-        if (gameManScript == null)
-        {
-            return;
-        }
+        PlayerManager playerManager = playerManagerGameObject.GetComponent<PlayerManager>();
+        if (playerManager == null)
+            Debug.LogError("Null player manager");
 
-        GameObject bike = gameManScript.activeBike;
+        GameObject bike = playerManager.activeBike;
         if(bike == null)
         {
             return;

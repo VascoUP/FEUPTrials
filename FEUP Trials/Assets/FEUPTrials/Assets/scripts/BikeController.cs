@@ -2,7 +2,7 @@
 
 public class BikeController : MonoBehaviour
 {
-    private GameManager _gameManager;
+    private PlayerManager _playerManager;
 
     private Rigidbody2D _bikeRB;
     private WheelJoint2D _frontWheel;
@@ -33,7 +33,15 @@ public class BikeController : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        // Get the player manager with the same 
+        GameObject playerManagerGameObject = Utils.FilterTaggedObjectByParent("PlayerManager", transform.parent.name);
+        if (playerManagerGameObject == null)
+            Debug.LogError("Null player manager game object");
+
+        _playerManager = playerManagerGameObject.GetComponent<PlayerManager>();
+        if (_playerManager == null)
+            Debug.LogError("Null player manager");
+
         _bikeRB = GetComponent<Rigidbody2D>();
 
         WheelJoint2D[] wheelJoints = GetComponents<WheelJoint2D>();
@@ -58,12 +66,12 @@ public class BikeController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Checkpoint")
+        if (collision.gameObject.tag == "Checkpoint" && collision.gameObject.layer == gameObject.layer)
         {
             Checkpoint c = collision.gameObject.GetComponent<Checkpoint>();
             if (c != null && !c.active)
             {
-                _gameManager.SetCheckpoint(c);
+                _playerManager.SetCheckpoint(c);
             }
         }
     }
