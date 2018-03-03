@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-    public bool isToRestart = false;
-
     [SerializeField]
     private GameObject _playerPrefab;
     [SerializeField]
@@ -14,18 +12,37 @@ public class PlayerManager : MonoBehaviour
     private CameraController _cameraController;
 
     public GameObject activeBike;
-
-    [SerializeField]
+    
     private Checkpoint _checkpoint;
 
     private void Start()
     {
-        _cameraController = GameObject.Find("Main Camera").GetComponent<CameraController>();
+        GameObject tmp = Utils.FilterTaggedObjectByParent("MainCamera", transform.parent.name);
+        if (tmp == null)
+            Debug.LogError("Null Camera");
+        _cameraController = tmp.GetComponent<CameraController>();
+
+        // Get camera from GameManager ?
+
+        tmp = Utils.FilterTaggedObjectByParentAndName("Checkpoint", "Checkpoints", transform.parent.name);
+        foreach(Transform child in tmp.transform)
+        {
+            if (child.name == "Checkpoint 0")
+            {
+                _checkpoint = child.GetComponent<Checkpoint>();
+                break;
+            }
+        }
+
+        if (_checkpoint == null)
+            Debug.LogError("Checkpoint null");
+
+        Restart();
     }
 
     // Update is called once per frame
     private void Update () {
-        if (isToRestart || Input.GetKeyUp(KeyCode.R))
+        if (Input.GetKeyUp(KeyCode.R))
             Restart();
 	}
 

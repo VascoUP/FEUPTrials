@@ -12,22 +12,28 @@ public class BikeController : MonoBehaviour
     
     private bool _isActive = true;
 
-    public AnimationCurve forceCurve;
+    [SerializeField]
+    private AnimationCurve _forceCurve;
     private float _accelerationTime = 0;
+
+    [SerializeField]
+    private float _motorBackwardsForce = 100;
     
-    // Acceleration (in force) per second
-    public float forceAcceleration = 500;
     // Motor force
-    public float motorForce;
+    private float _motorForce;
     // Rotation force
-    public float rotationForce;
+    [SerializeField]
+    private float _rotationForce;
     // Velocity at which the bike needs to be to brake
-    public float velocityThereshold;
+    [SerializeField]
+    private float _velocityThereshold;
 
     // Angular drag value for when the bike is braking
-    public float brakeForce;
+    [SerializeField]
+    public float _brakeForce;
 
-    public float angularDrag;
+    [SerializeField]
+    public float _angularDrag;
 
     private bool _braking = false;
 
@@ -57,9 +63,9 @@ public class BikeController : MonoBehaviour
             Debug.LogError("Null wheel");
 
         _frontWheelRB = _frontWheel.connectedBody.gameObject.GetComponent<Rigidbody2D>();
-        _frontWheelRB.angularDrag = angularDrag;
+        _frontWheelRB.angularDrag = _angularDrag;
         _backWheelRB = _backWheel.connectedBody.gameObject.GetComponent<Rigidbody2D>();
-        _backWheelRB.angularDrag = angularDrag;
+        _backWheelRB.angularDrag = _angularDrag;
 
         _backWheel.useMotor = false;
     }
@@ -96,10 +102,10 @@ public class BikeController : MonoBehaviour
         _braking = true;
 
         _backWheel.useMotor = false;
-        motorForce = 0;
+        _motorForce = 0;
         
-        _frontWheelRB.angularDrag = brakeForce;
-        _backWheelRB.angularDrag = brakeForce;
+        _frontWheelRB.angularDrag = _brakeForce;
+        _backWheelRB.angularDrag = _brakeForce;
     }
 
     private void StopBrake()
@@ -108,8 +114,8 @@ public class BikeController : MonoBehaviour
 
         _backWheel.useMotor = true;
 
-        _frontWheelRB.angularDrag = angularDrag;
-        _backWheelRB.angularDrag = angularDrag;
+        _frontWheelRB.angularDrag = _angularDrag;
+        _backWheelRB.angularDrag = _angularDrag;
     }
 
     private bool ActivateMotor()
@@ -130,8 +136,8 @@ public class BikeController : MonoBehaviour
         if (!_backWheel.useMotor)
             return;
 
-        _frontWheelRB.angularDrag = angularDrag;
-        _backWheelRB.angularDrag = angularDrag;
+        _frontWheelRB.angularDrag = _angularDrag;
+        _backWheelRB.angularDrag = _angularDrag;
 
         JointMotor2D motor = _backWheel.motor;
         motor.motorSpeed = -speed;
@@ -147,8 +153,8 @@ public class BikeController : MonoBehaviour
 
             // Move forward
             _accelerationTime += Time.deltaTime;
-            float force = forceCurve.Evaluate(_accelerationTime);
-            motorForce = force * _backWheel.motor.maxMotorTorque;
+            float force = _forceCurve.Evaluate(_accelerationTime);
+            _motorForce = force * _backWheel.motor.maxMotorTorque;
         }
         else
         {
@@ -156,7 +162,7 @@ public class BikeController : MonoBehaviour
             if (Input.GetKey(KeyCode.S))
             {
                 //Brake
-                if (DirectionalVelocity() > velocityThereshold)
+                if (DirectionalVelocity() > _velocityThereshold)
                 {
                     if (!_braking)
                         Brake();
@@ -166,14 +172,14 @@ public class BikeController : MonoBehaviour
                     if (_braking)
                         StopBrake();
                     // Move backwards
-                    motorForce = -100;
+                    _motorForce = -_motorBackwardsForce;
                 }
             }
             else
             {
                 if (_braking)
                     StopBrake();
-                motorForce = 0;
+                _motorForce = 0;
             }
         }
     }
@@ -182,7 +188,7 @@ public class BikeController : MonoBehaviour
     {
         UpdateUseMotor();
         CalculateMotorForce();
-        UpdateMotorSpeed(motorForce);
+        UpdateMotorSpeed(_motorForce);
     }
 
     private void UpdateRotation()
@@ -190,12 +196,12 @@ public class BikeController : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             // Rotate with positive angle
-            _bikeRB.AddTorque(Time.deltaTime * rotationForce, ForceMode2D.Impulse);
+            _bikeRB.AddTorque(Time.deltaTime * _rotationForce, ForceMode2D.Impulse);
         }
         else if (Input.GetKey(KeyCode.D))
         {
             // Rotate with negative angle
-            _bikeRB.AddTorque(-1 * Time.deltaTime * rotationForce, ForceMode2D.Impulse);
+            _bikeRB.AddTorque(-1 * Time.deltaTime * _rotationForce, ForceMode2D.Impulse);
         }
 
     }
@@ -203,7 +209,7 @@ public class BikeController : MonoBehaviour
     private void ResetBikeValues()
     {
         _accelerationTime = 0;
-        motorForce = 0;
+        _motorForce = 0;
         _braking = false;
         UpdateMotorSpeed(0f);
     }
