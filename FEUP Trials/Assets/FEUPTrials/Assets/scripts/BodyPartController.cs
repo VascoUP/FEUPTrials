@@ -14,14 +14,12 @@ public class BodyPartController : MonoBehaviour
         GameManager gameManScript = gameMan.GetComponent<GameManager>();
         if (gameManScript == null)
         {
-            Debug.Log("Rip no game manager script found");
             return;
         }
 
         GameObject bike = gameManScript.activeBike;
         if(bike == null)
         {
-            Debug.Log("Rip no bike found");
             return;
         }
 
