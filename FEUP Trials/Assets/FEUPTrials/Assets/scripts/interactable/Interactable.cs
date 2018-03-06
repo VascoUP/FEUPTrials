@@ -3,8 +3,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Interactable : MonoBehaviour {
-    private enum InteractionStates { NON_INTERACTABLE, INTERACTABLE, CHANNELING, COMPLETED }
-    private InteractionStates state = InteractionStates.NON_INTERACTABLE;
+    private enum InteractionStates { INTERACTABLE, CHANNELING, COMPLETED }
+    private InteractionStates state = InteractionStates.INTERACTABLE;
+
+    private bool[] _playerColliders = new bool[2];
+    private bool _channelIsPlayerOne;
 
     public GameObject interactionObject;
     private IInteract _interaction;
@@ -45,11 +48,12 @@ public class Interactable : MonoBehaviour {
     {
         if (collision.gameObject.tag != "Bike" || state == InteractionStates.COMPLETED)
             return;
-        
-        state = InteractionStates.INTERACTABLE;
+
+        bool isPlayerOne = PlayerManager.IsPlayerOne(collision.transform);
+        _playerColliders[isPlayerOne ? 0 : 1] = true;
 
         //Show UI E
-        _interactionText.text = "E";
+        _interactionText.text = "!";
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -57,13 +61,25 @@ public class Interactable : MonoBehaviour {
         if (collision.gameObject.tag != "Bike" || state == InteractionStates.COMPLETED)
             return;
         
-        state = InteractionStates.NON_INTERACTABLE;
+        state = InteractionStates.INTERACTABLE;
+
+        bool isPlayerOne = PlayerManager.IsPlayerOne(collision.transform);
+        _playerColliders[isPlayerOne ? 0 : 1] = false;
 
         // Show UI nothing
         _interactionText.text = "";
 
-        // Cancel channeling
-        StopChanneling();
+        if (state == InteractionStates.CHANNELING)
+        {
+            if ((isPlayerOne && _channelIsPlayerOne) || (!isPlayerOne && !_channelIsPlayerOne))
+                // Cancel channeling
+                StopChanneling();
+        }
+    }
+
+    private bool PlayerStoppedChanneling(bool playerOne)
+    {
+        return playerOne ? (_channelIsPlayerOne && !InputManager.IsInteracting(true)) : (!_channelIsPlayerOne && !InputManager.IsInteracting(false));
     }
 
     private void StopChanneling()
@@ -74,8 +90,9 @@ public class Interactable : MonoBehaviour {
         _interaction.Cancel();
     }
 
-    private void StartChanneling()
+    private void StartChanneling(bool isPlayerOne)
     {
+        _channelIsPlayerOne = isPlayerOne;
         _runningThread = StartCoroutine("ChannelingTime");
     }
 
@@ -83,16 +100,17 @@ public class Interactable : MonoBehaviour {
     void Update () {
         if(state == InteractionStates.INTERACTABLE)
         {
-            if(Input.GetKey(KeyCode.E))
+            bool pOne = _playerColliders[0] && InputManager.IsInteracting(true);
+            if (pOne || (_playerColliders[1] && InputManager.IsInteracting(false)))
             {
-                StartChanneling();
+                StartChanneling(pOne);
 
                 // Start channeling animation
             }
         }
         else if(state == InteractionStates.CHANNELING)
         {
-            if(!Input.GetKey(KeyCode.E))
+            if (PlayerStoppedChanneling(true) || PlayerStoppedChanneling(false))
             {
                 state = InteractionStates.INTERACTABLE;
 
@@ -101,4 +119,6 @@ public class Interactable : MonoBehaviour {
             }
         }
 	}
+
+
 }

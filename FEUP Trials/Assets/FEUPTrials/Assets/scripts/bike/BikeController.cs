@@ -146,7 +146,9 @@ public class BikeController : MonoBehaviour
 
     private void CalculateMotorForce()
     {
-        if (Input.GetKey(KeyCode.W))
+        float value = InputManager.GetAxis(this.transform, "Horizontal");
+        //float value = Input.GetAxis("Horizontal");
+        if (value > 0)
         {
             if (_braking)
                 StopBrake();
@@ -154,12 +156,12 @@ public class BikeController : MonoBehaviour
             // Move forward
             _accelerationTime += Time.deltaTime;
             float force = _forceCurve.Evaluate(_accelerationTime);
-            _motorForce = force * _backWheel.motor.maxMotorTorque;
+            _motorForce = force * value * _backWheel.motor.maxMotorTorque;
         }
         else
         {
             _accelerationTime = 0;
-            if (Input.GetKey(KeyCode.S))
+            if (value < 0)
             {
                 //Brake
                 if (DirectionalVelocity() > _velocityThereshold)
@@ -172,7 +174,7 @@ public class BikeController : MonoBehaviour
                     if (_braking)
                         StopBrake();
                     // Move backwards
-                    _motorForce = -_motorBackwardsForce;
+                    _motorForce = _motorBackwardsForce * value;
                 }
             }
             else
@@ -193,17 +195,9 @@ public class BikeController : MonoBehaviour
 
     private void UpdateRotation()
     {
-        if (Input.GetKey(KeyCode.A))
-        {
-            // Rotate with positive angle
-            _bikeRB.AddTorque(Time.deltaTime * _rotationForce, ForceMode2D.Impulse);
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            // Rotate with negative angle
-            _bikeRB.AddTorque(-1 * Time.deltaTime * _rotationForce, ForceMode2D.Impulse);
-        }
-
+        float value = InputManager.GetAxis(this.transform, "Vertical");
+        //float value = Input.GetAxis("Vertical");
+        _bikeRB.AddTorque(value * Time.deltaTime * _rotationForce, ForceMode2D.Impulse);
     }
 
     private void ResetBikeValues()

@@ -41,8 +41,10 @@ public class PlayerManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void Update () {
-        if (Input.GetKeyUp(KeyCode.R))
+    private void Update ()
+    {
+        bool isRestart = InputManager.IsRestart(this.transform);
+        if (isRestart)
             Restart();
 	}
 
@@ -76,5 +78,11 @@ public class PlayerManager : MonoBehaviour
     {
         _checkpoint = checkpoint;
         _checkpoint.ActivateCheckpoint();
+    }
+
+    public static bool IsPlayerOne(Transform transform)
+    {
+        string parentName = transform.parent.name;
+        return (parentName == "Player 1");
     }
 }

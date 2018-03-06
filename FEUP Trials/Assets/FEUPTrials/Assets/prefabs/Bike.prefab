@@ -344,7 +344,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 0
   _motorBackwardsForce: 200
-  _rotationForce: 6000
+  _rotationForce: 3000
   _velocityThereshold: 5
   _brakeForce: 500
   _angularDrag: 0.5

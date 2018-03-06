@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour {
     }
 
 	void Start () {
-        PushState(new MainMenu());
+        PushState(new Game(true));
 	}
 
 	void Update () {
