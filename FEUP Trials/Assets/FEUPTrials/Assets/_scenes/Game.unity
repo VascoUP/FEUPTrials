@@ -452,8 +452,8 @@ GameObject:
   - component: {fileID: 154583423}
   - component: {fileID: 154583422}
   m_Layer: 0
-  m_Name: Interaction 2
-  m_TagString: Untagged
+  m_Name: Interactee 2
+  m_TagString: Interactee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2538,7 +2538,7 @@ GameObject:
   - component: {fileID: 1021228274}
   m_Layer: 0
   m_Name: Interactable 2
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2649,8 +2649,8 @@ GameObject:
   - component: {fileID: 1220202782}
   - component: {fileID: 1220202783}
   m_Layer: 0
-  m_Name: Interaction 1
-  m_TagString: Untagged
+  m_Name: Interactee 1
+  m_TagString: Interactee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3370,7 +3370,7 @@ GameObject:
   - component: {fileID: 1582301351}
   m_Layer: 0
   m_Name: Interactable 1
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3401,7 +3401,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionObject: {fileID: 1220202781}
   _interactionText: {fileID: 1778758640}
-  _channelingTime: 1
+  _channelingTime: 5
 --- !u!61 &1582301351
 BoxCollider2D:
   m_ObjectHideFlags: 0

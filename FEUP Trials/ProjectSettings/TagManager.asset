@@ -11,6 +11,8 @@ TagManager:
   - Bike
   - InteractionCollider
   - PlayerManager
+  - Interactable
+  - Interactee
   layers:
   - Default
   - TransparentFX
