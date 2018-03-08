@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [SerializeField]
 internal class Game : IGameState
@@ -7,11 +9,18 @@ internal class Game : IGameState
 
     private bool isMultiplayer;
 
+    private List<GameObject> cameras = new List<GameObject>();
+
     public Game(bool isMultiplayer = false)
     { 
         // Create an alias for the prefab manager instance
         prefabs = GameManager.instance.prefabManager;
         this.isMultiplayer = isMultiplayer;
+    }
+
+    public void LoadScene()
+    {
+        SceneManager.LoadScene("Game");
     }
 
     public void OnEnter()
@@ -24,6 +33,7 @@ internal class Game : IGameState
     {
         if (Input.GetKey(KeyCode.Escape))
         {
+            Debug.Log("Going back to the main menu.");
             GameManager.instance.ChangeState(new MainMenu());
         }
         if (Input.GetKey(KeyCode.P))
@@ -32,12 +42,24 @@ internal class Game : IGameState
         }
     }
 
+    public void OnExit()
+    {
+        // Cleanup cameras
+        foreach (GameObject cam in cameras) {
+            Debug.Log("Destroyed camera muahahah");
+            Object.Destroy(cam);
+        }
+    }
+
     private void SpawnCameras()
     {
         GameObject player = GameObject.Find("Player 1");
+
         GameObject cameraObject = Object.Instantiate(prefabs.camera, player.transform);
         cameraObject.AddComponent<AudioListener>();
         cameraObject.layer = 8;
+        cameras.Add(cameraObject);
+
         Camera camera = cameraObject.GetComponent<Camera>();
         camera.name = "Camera Player 1";
 
@@ -45,10 +67,11 @@ internal class Game : IGameState
         {
             camera.orthographicSize = 15;
             camera.rect = new Rect(new Vector2(0f, 0f), new Vector2(0.5f, 1f));
-
             player = GameObject.Find("Player 2");
             cameraObject = Object.Instantiate(prefabs.camera, player.transform);
             cameraObject.layer = 9;
+            cameras.Add(cameraObject);
+
             camera = cameraObject.GetComponent<Camera>();
             camera.name = "Camera Player 2";
             camera.orthographicSize = 15;

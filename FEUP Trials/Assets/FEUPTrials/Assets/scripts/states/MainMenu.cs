@@ -1,7 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 internal class MainMenu : IGameState
 {
+    public void LoadScene()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
     public void OnEnter()
     {
         Debug.Log("On Enter");
@@ -17,6 +23,10 @@ internal class MainMenu : IGameState
         {
             GameManager.instance.ChangeState(new Game(true));
         }
-        Debug.Log("Update");
+    }
+
+    public void OnExit()
+    {
+
     }
 }

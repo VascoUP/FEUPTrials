@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -16,10 +17,12 @@ public class GameManager : MonoBehaviour {
         if (instance == null) instance = this;
         else if (instance != this) Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-	void Start () {
-        PushState(new Game(true));
+    void Start () {
+        PushState(new MainMenu());
 	}
 
 	void Update () {
@@ -29,17 +32,23 @@ public class GameManager : MonoBehaviour {
     internal void PushState(IGameState state)
     {
         states.Push(state);
+        PeekState().LoadScene();
+    }
+
+    internal void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
         PeekState().OnEnter();
     }
 
     internal void PopState()
     {
+        PeekState().OnExit();
         states.Pop();
     }
 
     internal void ChangeState(IGameState state)
     {
-        if (states.Count == 0) PopState();
+        if (states.Count != 0) PopState();
         PushState(state);
     }
 
