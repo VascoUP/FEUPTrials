@@ -11,6 +11,12 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     internal PrefabManager prefabManager;
 
+    GameManager()
+    {
+        //Debug.Log("Start");
+        //PushStateNoLoad(new MainMenu());
+    }
+
     void Awake()
     {
         // Enforce the singleton pattern
@@ -21,13 +27,21 @@ public class GameManager : MonoBehaviour {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    void Start () {
-        PushState(new MainMenu());
+    void Start ()
+    {
+        Debug.Log("Start");
+        PushStateNoLoad(new MainMenu());
 	}
 
-	void Update () {
+	void Update ()
+    {
         PeekState().Update();
 	}
+
+    internal void PushStateNoLoad(IGameState state)
+    {
+        states.Push(state);
+    }
 
     internal void PushState(IGameState state)
     {
@@ -37,6 +51,9 @@ public class GameManager : MonoBehaviour {
 
     internal void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (StatesCount() <= 0)
+            return;
+
         PeekState().OnEnter();
     }
 
@@ -50,6 +67,11 @@ public class GameManager : MonoBehaviour {
     {
         if (states.Count != 0) PopState();
         PushState(state);
+    }
+
+    internal int StatesCount()
+    {
+        return states.Count;
     }
 
     IGameState PeekState()
