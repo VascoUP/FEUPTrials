@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RampInteract : MonoBehaviour, IInteract
+public class AnimationInteractee : MonoBehaviour, IInteract
 {
     private Animator _animator;
+    [SerializeField]
+    private string _completeAnimationName;
 
     // Use this for initialization
     void Start()
@@ -30,6 +32,6 @@ public class RampInteract : MonoBehaviour, IInteract
 
     public void Completed()
     {
-        _animator.Play("RampIntAnim");
+        _animator.Play(_completeAnimationName);
     }
 }
