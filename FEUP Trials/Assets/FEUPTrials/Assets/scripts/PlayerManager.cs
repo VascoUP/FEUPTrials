@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
+public delegate void SetPlayer(GameObject bike);
 
 public class PlayerManager : MonoBehaviour
 {
@@ -9,22 +9,15 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private GameObject _bikePrefab;
 
-    private CameraController _cameraController;
-
+    private Checkpoint _checkpoint;
     public GameObject activeBike;
     
-    private Checkpoint _checkpoint;
+    public SetPlayer NewPlayer;
 
     private void Start()
     {
-        GameObject tmp = Utils.FilterTaggedObjectByParent("MainCamera", transform.parent.name);
-        if (tmp == null)
-            Debug.LogError("Null Camera");
-        _cameraController = tmp.GetComponent<CameraController>();
-
-        // Get camera from GameManager ?
-
-        tmp = Utils.FilterTaggedObjectByParentAndName("Checkpoint", "Checkpoints", transform.parent.name);
+        // Get first checkpoint
+        GameObject tmp = Utils.FilterTaggedObjectByParentAndName("Checkpoint", "Checkpoints", transform.parent.name);
         foreach(Transform child in tmp.transform)
         {
             if (child.name == "Checkpoint 0")
@@ -33,14 +26,20 @@ public class PlayerManager : MonoBehaviour
                 break;
             }
         }
-
         if (_checkpoint == null)
             Debug.LogError("Checkpoint null");
 
+        // Get ground root object
+        GameObject groundRoot = GameObject.Find("Ground Root");
+        GroundManager gManager = groundRoot.GetComponent<GroundManager>();
+        if(transform.parent.name == "Player 1")
+            NewPlayer += new SetPlayer(gManager.SetPlayerOneObject);
+        else
+            NewPlayer += new SetPlayer(gManager.SetPlayerTwoObject);
+
         Restart();
     }
-
-    // Update is called once per frame
+        
     private void Update ()
     {
         bool isRestart = InputManager.IsRestart(this.transform);
@@ -63,7 +62,6 @@ public class PlayerManager : MonoBehaviour
         activeBike.name = "Bike";
         activeBike.transform.parent = transform.parent;
         activeBike.transform.position = _checkpoint.BikeNewPosition();
-        _cameraController.SetPlayerObject(activeBike);
         Utils.SetLayer(activeBike.transform, gameObject.layer);
 
         // Instantiate player
@@ -72,6 +70,9 @@ public class PlayerManager : MonoBehaviour
         tmp.transform.parent = transform.parent;
         tmp.transform.position = _checkpoint.BikeNewPosition();
         Utils.SetLayer(tmp.transform, gameObject.layer);
+        
+        if(NewPlayer != null)
+            NewPlayer(activeBike);
     }
 
     public void SetCheckpoint(Checkpoint checkpoint)

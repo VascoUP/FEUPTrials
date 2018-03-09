@@ -25,8 +25,8 @@ internal class Game : IGameState
 
     public void OnEnter()
     {
-        SpawnCameras();
-        SpawnPlayerManagers();
+        SpawnPlayerOne();
+        SpawnPlayerTwo();
     }
 
     public void Update()
@@ -51,9 +51,13 @@ internal class Game : IGameState
         }
     }
 
-    private void SpawnCameras()
+    private void SpawnPlayerOne()
     {
         GameObject player = GameObject.Find("Player 1");
+        GameObject playerManagerObject = Object.Instantiate(prefabs.playerManager, player.transform);
+        playerManagerObject.name = "Player Manager";
+
+        AssociatePlayerManagerCamera(playerManagerObject, prefabs.camera);
 
         GameObject cameraObject = Object.Instantiate(prefabs.camera, player.transform);
         cameraObject.AddComponent<AudioListener>();
@@ -67,35 +71,43 @@ internal class Game : IGameState
         {
             camera.orthographicSize = 15;
             camera.rect = new Rect(new Vector2(0f, 0f), new Vector2(0.5f, 1f));
-            player = GameObject.Find("Player 2");
-            cameraObject = Object.Instantiate(prefabs.camera, player.transform);
-            cameraObject.layer = 9;
-            cameras.Add(cameraObject);
-
-            camera = cameraObject.GetComponent<Camera>();
-            camera.name = "Camera Player 2";
-            camera.orthographicSize = 15;
-            camera.rect = new Rect(new Vector2(0.5f, 0f), new Vector2(0.5f, 1f));
-            camera.cullingMask = (1 << LayerMask.NameToLayer("Default")) | (1 << LayerMask.NameToLayer("TransparentFX"))
-                | (1 << LayerMask.NameToLayer("Ignore Raycast")) | (1 << LayerMask.NameToLayer("Water"))
-                | (1 << LayerMask.NameToLayer("UI")) | (1 << LayerMask.NameToLayer("Player 2"));
         }
-    }
 
-    private void SpawnPlayerManagers()
+    }
+    
+    private void SpawnPlayerTwo()
     {
-        GameObject player = GameObject.Find("Player 1");
+        if (!isMultiplayer)
+            return;
+
+        GameObject player = GameObject.Find("Player 2");
+
+        prefabs.playerManager.layer = 9;
         GameObject playerManagerObject = Object.Instantiate(prefabs.playerManager, player.transform);
         playerManagerObject.name = "Player Manager";
+        prefabs.playerManager.layer = 8;
 
-        if (isMultiplayer)
+        AssociatePlayerManagerCamera(playerManagerObject, prefabs.camera);
+
+        GameObject cameraObject = Object.Instantiate(prefabs.camera, player.transform);
+        cameraObject.layer = 9;
+        cameras.Add(cameraObject);
+
+        Camera camera = cameraObject.GetComponent<Camera>();
+        camera.name = "Camera Player 2";
+        camera.orthographicSize = 15;
+        camera.rect = new Rect(new Vector2(0.5f, 0f), new Vector2(0.5f, 1f));
+        camera.cullingMask = (1 << LayerMask.NameToLayer("Default")) | (1 << LayerMask.NameToLayer("TransparentFX"))
+            | (1 << LayerMask.NameToLayer("Ignore Raycast")) | (1 << LayerMask.NameToLayer("Water"))
+            | (1 << LayerMask.NameToLayer("UI")) | (1 << LayerMask.NameToLayer("Player 2"));
+    }
+
+    private void AssociatePlayerManagerCamera(GameObject playerManager, GameObject camera)
+    {
+        CameraController controller = prefabs.camera.GetComponent<CameraController>();
+        if (controller != null)
         {
-            player = GameObject.Find("Player 2");
-            prefabs.playerManager.layer = 9;
-            playerManagerObject = Object.Instantiate(prefabs.playerManager, player.transform);
-            playerManagerObject.name = "Player Manager";
-
-            prefabs.playerManager.layer = 8;
+            controller.playerManager = playerManager.GetComponent<PlayerManager>();
         }
     }
 }
