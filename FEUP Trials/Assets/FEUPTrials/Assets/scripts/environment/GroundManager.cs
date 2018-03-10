@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class GroundManager : MonoBehaviour {
@@ -14,6 +16,7 @@ public class GroundManager : MonoBehaviour {
     [SerializeField]
     private int _numberOfGroundObjectsPerPlayer;
 
+    public GroundOffset[] groundOffsets;
     public Vector2 groundOffset;
     
     private Dictionary<float, GameObject> _previousGroundObjects;
@@ -97,9 +100,27 @@ public class GroundManager : MonoBehaviour {
             {            
                 // Spawn a new object
                 GameObject spawnedObject = Instantiate(_groundPrefab, transform);
-                spawnedObject.transform.position = new Vector3(value + groundOffset.x - _groundWidth / 2f, groundOffset.y - _groundHeight / 2f);
+                Vector2 offset = BlockOffset(value);
+                spawnedObject.transform.position = new Vector3(value + offset.x - _groundWidth / 2f, offset.y - _groundHeight / 2f);
                 _previousGroundObjects.Add(value, spawnedObject);
             }
         }
     }
+
+    private Vector2 BlockOffset(float xPosition)
+    {
+        foreach(GroundOffset go in groundOffsets)
+        {
+            if (go.xPosition - go.offset.x >= xPosition)
+                return go.offset;
+        }
+        return Vector2.zero;
+    }
+}
+
+[Serializable]
+public class GroundOffset
+{
+    public float xPosition;
+    public Vector2 offset;
 }

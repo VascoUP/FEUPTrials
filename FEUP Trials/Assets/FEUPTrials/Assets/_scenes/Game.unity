@@ -1756,54 +1756,6 @@ Transform:
   m_Father: {fileID: 1791626751}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &593766875
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 593766876}
-  - component: {fileID: 593766877}
-  m_Layer: 0
-  m_Name: GroundMesh
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &593766876
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 593766875}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 211.1, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1163150607}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!68 &593766877
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 593766875}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 013b75d115156b24b9e57a6848b81576, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: -1000, y: -0.05}
-  - {x: 58.9, y: -0.05}
-  - {x: 68.9, y: -10.05}
-  - {x: 1000, y: -10.05}
 --- !u!1 &669342345
 GameObject:
   m_ObjectHideFlags: 0
@@ -4157,6 +4109,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1163150607}
   - component: {fileID: 1163150608}
+  - component: {fileID: 1163150609}
   m_Layer: 0
   m_Name: Ground Root
   m_TagString: Untagged
@@ -4173,8 +4126,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 593766876}
+  m_Children: []
   m_Father: {fileID: 1791626751}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4192,7 +4144,31 @@ MonoBehaviour:
   _groundPrefab: {fileID: 1888423550886098, guid: 991fbef90f120364886064841b3b1a6e,
     type: 2}
   _numberOfGroundObjectsPerPlayer: 6
+  groundOffsets:
+  - xPosition: 270
+    offset: {x: 20, y: 0}
+  - xPosition: 1e+10
+    offset: {x: 20, y: -10}
   groundOffset: {x: 20, y: 0}
+--- !u!68 &1163150609
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1163150606}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 013b75d115156b24b9e57a6848b81576, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -1e+10, y: -0.05}
+  - {x: 270, y: -0.05}
+  - {x: 280, y: -10.05}
+  - {x: 1e+10, y: -10.05}
 --- !u!1 &1194658122
 GameObject:
   m_ObjectHideFlags: 0
@@ -5214,7 +5190,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1539801201}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 321.74, y: -3.14, z: 0}
+  m_LocalPosition: {x: 323.5, y: -3.14, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 550170017}
