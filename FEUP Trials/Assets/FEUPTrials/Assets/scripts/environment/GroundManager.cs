@@ -15,16 +15,19 @@ public class GroundManager : MonoBehaviour {
     private int _numberOfGroundObjectsPerPlayer;
 
     public Vector2 groundOffset;
+    
+    private Dictionary<float, GameObject> _previousGroundObjects;
+    private float _previousSnapBlockP1;
+    private float _previousSnapBlockP2;
 
-    private Dictionary<float, GameObject> _groundObjects;
-
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
     {
-        _groundObjects = new Dictionary<float, GameObject>();
+        _previousGroundObjects = new Dictionary<float, GameObject>();
+        _previousSnapBlockP1 = 0;
+        _previousSnapBlockP2 = 0;
 
-        if(_playerOne != null)
-            UpdateGroundObjects(_playerOne);
+        UpdateGroundObjects(true, true);
     }
 
     public void SetPlayerOneObject(GameObject player)
@@ -39,33 +42,64 @@ public class GroundManager : MonoBehaviour {
 
     void LateUpdate ()
     {
-        if(_playerOne != null)
-            UpdateGroundObjects(_playerOne);
-        if(_playerTwo != null)
-            UpdateGroundObjects(_playerTwo);
+        UpdateGroundObjects(true, true);
+    }
+    
+    private void UpdateGroundObjects(bool doP1, bool doP2)
+    {
+        HashSet<float> groundObjects = new HashSet<float>();
+        
+        if (_playerOne != null)
+            CalcSpawnedBlocks(_playerOne, ref groundObjects);
+        if (_playerTwo != null)
+            CalcSpawnedBlocks(_playerTwo, ref groundObjects);
+
+        UpdateSpawnedBlocks(ref groundObjects);
     }
 
-    private void UpdateGroundObjects(GameObject player)
+    private void CalcSpawnedBlocks(GameObject player, ref HashSet<float> groundObjects)
     {
         Vector3 playerPosition = player.transform.position;
         float snapBlockX = Mathf.Floor(playerPosition.x / _groundWidth);
         float firstBlockX = Mathf.Floor(snapBlockX - (_numberOfGroundObjectsPerPlayer - 3) / 2f);
-
+        
         for(int i = 0; i < _numberOfGroundObjectsPerPlayer; i++)
         {
             float xPosition = (firstBlockX + i) * _groundWidth;
-            if (IsGroundAlreadySpawned(xPosition))
-                continue;
-            GameObject spawnedObject = Instantiate(_groundPrefab, transform);
-            spawnedObject.transform.position = new Vector3(xPosition + groundOffset.x - _groundWidth / 2f, groundOffset.y - _groundHeight / 2f);
-            _groundObjects.Add(xPosition, spawnedObject);
+            groundObjects.Add(xPosition);
         }
     }
-
-    private bool IsGroundAlreadySpawned(float xPosition)
+    
+    private void UpdateSpawnedBlocks(ref HashSet<float> groundObjects)
     {
-        GameObject ground;
-        _groundObjects.TryGetValue(xPosition, out ground);
-        return ground != null;
+        List<float> removableObjects = new List<float>();
+        foreach (KeyValuePair<float, GameObject> entry in _previousGroundObjects)
+        {
+            if(groundObjects.Contains(entry.Key))
+            {
+                groundObjects.Remove(entry.Key);
+            }
+            else
+            {
+                Destroy(entry.Value);
+                removableObjects.Add(entry.Key);
+            }
+        }
+
+        foreach (float value in removableObjects)
+        {
+            _previousGroundObjects.Remove(value);
+        }
+
+        foreach(float value in groundObjects)
+        {
+            if(!_previousGroundObjects.ContainsKey(value))
+            {            
+                // Spawn a new object
+                GameObject spawnedObject = Instantiate(_groundPrefab, transform);
+                spawnedObject.transform.position = new Vector3(value + groundOffset.x - _groundWidth / 2f, groundOffset.y - _groundHeight / 2f);
+                _previousGroundObjects.Add(value, spawnedObject);
+            }
+        }
     }
 }
