@@ -56,3 +56,5 @@ MonoBehaviour:
   _bikePrefab: {fileID: 1878052541281850, guid: a7e06ea176dcea94690cd25e0d9401a5,
     type: 2}
   activeBike: {fileID: 0}
+  timeCounter: 0
+  isFinished: 0

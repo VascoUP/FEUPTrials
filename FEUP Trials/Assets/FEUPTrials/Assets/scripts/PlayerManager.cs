@@ -14,16 +14,24 @@ public class PlayerManager : MonoBehaviour
     
     public SetPlayer NewPlayer;
 
+    public float timeCounter = 0f;
+    public bool isFinished = false;
+
     private void Start()
     {
         // Get first checkpoint
         GameObject tmp = Utils.FilterTaggedObjectByParentAndName("Checkpoint", "Checkpoints", transform.parent.name);
         foreach(Transform child in tmp.transform)
         {
+            Checkpoint checkpoint = child.GetComponent<Checkpoint>();
+            if(checkpoint != null)
+            {
+                checkpoint.SetPlayerManager(this);
+            }
+
             if (child.name == "Checkpoint 0")
             {
-                _checkpoint = child.GetComponent<Checkpoint>();
-                break;
+                _checkpoint = checkpoint;
             }
         }
         if (_checkpoint == null)
@@ -37,15 +45,26 @@ public class PlayerManager : MonoBehaviour
         else
             NewPlayer += new SetPlayer(gManager.SetPlayerTwoObject);
 
+        // Get Checkpoint for this object
+
+
         Restart();
     }
-        
+
     private void Update ()
     {
         bool isRestart = InputManager.IsRestart(this.transform);
         if (isRestart)
             Restart();
+
+        if(!isFinished)
+            timeCounter += Time.deltaTime;
 	}
+
+    public void FinishGame()
+    {
+        isFinished = true;
+    }
 
     private void Restart()
     {
@@ -78,7 +97,6 @@ public class PlayerManager : MonoBehaviour
     public void SetCheckpoint(Checkpoint checkpoint)
     {
         _checkpoint = checkpoint;
-        _checkpoint.ActivateCheckpoint();
     }
 
     public static bool IsPlayerOne(Transform transform)
