@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Interactable : MonoBehaviour {
     private enum InteractionStates { INTERACTABLE, CHANNELING, COMPLETED }
@@ -11,20 +10,27 @@ public class Interactable : MonoBehaviour {
 
     public GameObject interactionObject;
     private IInteract _interaction;
-
+    
     [SerializeField]
-    private Text _interactionText;
+    private GameObject _interactionTextObject;
+    [SerializeField]
+    private Vector2 _offset;
+    [SerializeField]
+    private float _rotation;
+    private GameObject[] _instantiatedTextObjects;
+
     [SerializeField]
     private float _channelingTime;
 
     private Coroutine _runningThread;
 
-    void Start()
+    private void Start()
     {
         _interaction = (IInteract) interactionObject.GetComponent(typeof(IInteract));
+        _instantiatedTextObjects = new GameObject[2];
     }
 
-    IEnumerator ChannelingTime()
+    private IEnumerator ChannelingTime()
     {
         state = InteractionStates.CHANNELING;
 
@@ -33,7 +39,9 @@ public class Interactable : MonoBehaviour {
         if(state == InteractionStates.CHANNELING)
         {
             state = InteractionStates.COMPLETED;
-            _interactionText.text = "";
+
+            DestroyText(0);
+            DestroyText(1);
 
             // Notify object
             _interaction.Completed();
@@ -49,31 +57,74 @@ public class Interactable : MonoBehaviour {
         if (collision.gameObject.tag != "Bike" || state == InteractionStates.COMPLETED)
             return;
 
-        bool isPlayerOne = PlayerManager.IsPlayerOne(collision.transform);
-        _playerColliders[isPlayerOne ? 0 : 1] = true;
-
-        //Show UI E
-        _interactionText.text = "!";
+        PlayerOnTop(collision.gameObject);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag != "Bike" || state == InteractionStates.COMPLETED)
             return;
-        
-        state = InteractionStates.INTERACTABLE;
 
-        bool isPlayerOne = PlayerManager.IsPlayerOne(collision.transform);
+        PlayerExit(collision.gameObject);
+    }
+
+    private void PlayerOnTop(GameObject player)
+    {
+        if(state == InteractionStates.COMPLETED)
+        {
+            return;
+        }
+
+        bool isPlayerOne = PlayerManager.IsPlayerOne(player.transform);
+        _playerColliders[isPlayerOne ? 0 : 1] = true;
+
+        int index = isPlayerOne ? 0 : 1;
+        string text = state == InteractionStates.CHANNELING ? "Wait" : "Interact";
+        InstantiateText(index, text);
+    }
+
+    private void PlayerExit(GameObject player)
+    {
+        bool isPlayerOne = PlayerManager.IsPlayerOne(player.transform);
         _playerColliders[isPlayerOne ? 0 : 1] = false;
-
-        // Show UI nothing
-        _interactionText.text = "";
+        
+        int index = isPlayerOne ? 0 : 1;
+        DestroyText(index);
 
         if (state == InteractionStates.CHANNELING)
         {
             if ((isPlayerOne && _channelIsPlayerOne) || (!isPlayerOne && !_channelIsPlayerOne))
                 // Cancel channeling
                 StopChanneling();
+        }
+    }
+
+    private void InstantiateText(int index, string text)
+    {
+        if(_instantiatedTextObjects[index] == null)
+        {
+            _instantiatedTextObjects[index] = Instantiate(_interactionTextObject, transform);
+            _instantiatedTextObjects[index].transform.Rotate(Vector3.forward * _rotation);
+            _instantiatedTextObjects[index].transform.localPosition = new Vector3(_offset.x, _offset.y, 0);
+            Utils.SetLayer(_instantiatedTextObjects[index].transform, 8 + index);
+            SetText(index, text);
+        }
+    }
+
+    private void DestroyText(int index)
+    {
+        if (_instantiatedTextObjects[index] != null)
+        {
+            Destroy(_instantiatedTextObjects[index]);
+            _instantiatedTextObjects[index] = null;
+        }
+    }
+
+    private void SetText(int index, string text)
+    {
+        if(_instantiatedTextObjects[index] != null)
+        {
+            _instantiatedTextObjects[index].GetComponent<TextMesh>().text = text;
         }
     }
 
@@ -88,17 +139,31 @@ public class Interactable : MonoBehaviour {
             StopCoroutine(_runningThread);
         _runningThread = null;
         _interaction.Cancel();
+
+        state = InteractionStates.INTERACTABLE;
+
+        SetText(0, "Interact");
+        SetText(1, "Interact");
     }
 
     private void StartChanneling(bool isPlayerOne)
     {
         _channelIsPlayerOne = isPlayerOne;
         _runningThread = StartCoroutine("ChannelingTime");
-    }
 
-    // Update is called once per frame
-    void Update () {
-        if(state == InteractionStates.INTERACTABLE)
+        if(isPlayerOne)
+        {
+            SetText(0, "Channeling");
+            SetText(1, "Wait");
+        } else
+        {
+            SetText(0, "Wait");
+            SetText(1, "Channeling");
+        }
+    }
+    
+    private void Update () {
+        if (state == InteractionStates.INTERACTABLE)
         {
             bool pOne = _playerColliders[0] && InputManager.IsInteracting(true);
             if (pOne || (_playerColliders[1] && InputManager.IsInteracting(false)))
@@ -119,6 +184,4 @@ public class Interactable : MonoBehaviour {
             }
         }
 	}
-
-
 }

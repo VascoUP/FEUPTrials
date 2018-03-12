@@ -20,15 +20,10 @@ public class GroundManager : MonoBehaviour {
     public Vector2 groundOffset;
     
     private Dictionary<float, GameObject> _previousGroundObjects;
-    private float _previousSnapBlockP1;
-    private float _previousSnapBlockP2;
-
-    // Use this for initialization
+    
     void Start ()
     {
         _previousGroundObjects = new Dictionary<float, GameObject>();
-        _previousSnapBlockP1 = 0;
-        _previousSnapBlockP2 = 0;
 
         UpdateGroundObjects(true, true);
     }

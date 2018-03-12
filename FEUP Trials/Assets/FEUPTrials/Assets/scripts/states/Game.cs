@@ -33,12 +33,7 @@ internal class Game : IGameState
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            Debug.Log("Going back to the main menu.");
             GameManager.instance.ChangeState(new MainMenu());
-        }
-        if (Input.GetKey(KeyCode.P))
-        {
-            GameManager.instance.PushState(new Pause());
         }
     }
 
@@ -46,7 +41,6 @@ internal class Game : IGameState
     {
         // Cleanup cameras
         foreach (GameObject cam in cameras) {
-            Debug.Log("Destroyed camera muahahah");
             Object.Destroy(cam);
         }
     }
@@ -71,6 +65,9 @@ internal class Game : IGameState
         {
             camera.orthographicSize = 15;
             camera.rect = new Rect(new Vector2(0f, 0f), new Vector2(0.5f, 1f));
+            
+            CameraController controller = cameraObject.GetComponent<CameraController>();
+            controller.offset.y = 10;
         }
 
     }
@@ -99,7 +96,11 @@ internal class Game : IGameState
         camera.rect = new Rect(new Vector2(0.5f, 0f), new Vector2(0.5f, 1f));
         camera.cullingMask = (1 << LayerMask.NameToLayer("Default")) | (1 << LayerMask.NameToLayer("TransparentFX"))
             | (1 << LayerMask.NameToLayer("Ignore Raycast")) | (1 << LayerMask.NameToLayer("Water"))
-            | (1 << LayerMask.NameToLayer("UI")) | (1 << LayerMask.NameToLayer("Player 2"));
+            | (1 << LayerMask.NameToLayer("UI")) | (1 << LayerMask.NameToLayer("Player 2"))
+            | (1 << LayerMask.NameToLayer("Background Image"));
+
+        CameraController controller = cameraObject.GetComponent<CameraController>();
+        controller.offset.y = 10;
     }
 
     private void AssociatePlayerManagerCamera(GameObject playerManager, GameObject camera)

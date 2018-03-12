@@ -5,12 +5,12 @@ internal class MainMenu : IGameState
 {
     public void LoadScene()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("Start");
     }
 
     public void OnEnter()
     {
-        Debug.Log("On Enter");
+
     }
 
     public void Update()

@@ -8,8 +8,14 @@ public class UIManager : MonoBehaviour {
     private Timer _timer;
     [SerializeField]
     private Text _timerText;
-	// Update is called once per frame
+    /*[SerializeField]
+    private */
+
 	void LateUpdate () {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+
+        }
         if (_timer.isTimeToText)
         {
             _timerText.text = TimeToString();
@@ -22,6 +28,6 @@ public class UIManager : MonoBehaviour {
         float timeCounter = _timer.timeCounter;
         int minutes = Mathf.FloorToInt(timeCounter / 60f);
         int seconds = Mathf.FloorToInt(timeCounter - minutes * 60f);
-        return "Timer    " + (minutes < 10 ? "0" : "") + minutes + " " + (seconds < 10 ? "0" : "") + seconds;
+        return (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
     }
 }

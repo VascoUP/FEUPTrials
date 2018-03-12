@@ -7,13 +7,18 @@ public class InputManager {
     {
         string parentName = trans.parent.name;
         bool isPlayerOne = PlayerManager.IsPlayerOne(trans);
-        axis = (isPlayerOne ? "P1_" : "P2_") + axis;
+        axis = GetButtonName(isPlayerOne, axis);
         return Input.GetAxis(axis);
+    }
+
+    private static string GetButtonName(bool isPlayerOne, string button)
+    {
+        return (isPlayerOne ? "P1_" : "P2_") + button;
     }
 
     private static bool GetButton(bool isPlayerOne, string button)
     {
-        button = (isPlayerOne ? "P1_" : "P2_") + button;
+        button = GetButtonName(isPlayerOne, button);
         return Input.GetButton(button);
     }
 
