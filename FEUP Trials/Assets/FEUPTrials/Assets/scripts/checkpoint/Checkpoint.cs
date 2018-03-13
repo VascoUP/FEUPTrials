@@ -25,7 +25,7 @@ public class Checkpoint : MonoBehaviour
             ActivateCheckpoint();
 
             if (isFinish)
-                _playerManager.FinishGame();
+                _playerManager.FinalCheckpoint();
         }
     }
 

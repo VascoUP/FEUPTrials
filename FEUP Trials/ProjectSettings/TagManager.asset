@@ -14,6 +14,8 @@ TagManager:
   - Interactable
   - Interactee
   - Interaction Text
+  - SP Game Over
+  - MP Game Over
   layers:
   - Default
   - TransparentFX

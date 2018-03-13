@@ -6,15 +6,18 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager instance = null;
 
-    private Stack states = new Stack();
+    private Stack _states = new Stack();
 
     [SerializeField]
     internal PrefabManager prefabManager;
 
+    [SerializeField]
+    internal float spTimeLimit;
+    [SerializeField]
+    internal int spFaultLimit;
+
     GameManager()
     {
-        //Debug.Log("Start");
-        //PushStateNoLoad(new MainMenu());
     }
 
     void Awake()
@@ -29,7 +32,6 @@ public class GameManager : MonoBehaviour {
 
     void Start ()
     {
-        Debug.Log("Start");
         PushStateNoLoad(new MainMenu());
 	}
 
@@ -40,12 +42,12 @@ public class GameManager : MonoBehaviour {
 
     internal void PushStateNoLoad(IGameState state)
     {
-        states.Push(state);
+        _states.Push(state);
     }
 
     internal void PushState(IGameState state)
     {
-        states.Push(state);
+        _states.Push(state);
         PeekState().LoadScene();
     }
 
@@ -60,22 +62,22 @@ public class GameManager : MonoBehaviour {
     internal void PopState()
     {
         PeekState().OnExit();
-        states.Pop();
+        _states.Pop();
     }
 
     internal void ChangeState(IGameState state)
     {
-        if (states.Count != 0) PopState();
+        if (_states.Count != 0) PopState();
         PushState(state);
     }
 
     internal int StatesCount()
     {
-        return states.Count;
+        return _states.Count;
     }
 
     IGameState PeekState()
     {
-        return (IGameState)states.Peek();
+        return (IGameState)_states.Peek();
     }
 }

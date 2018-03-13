@@ -8,26 +8,33 @@ public class UIManager : MonoBehaviour {
     private Timer _timer;
     [SerializeField]
     private Text _timerText;
+    [SerializeField]
+    private GameObject _spGOPanel;
+    [SerializeField]
+    private Text _spState;
+    [SerializeField]
+    private Text _spTime;
+    [SerializeField]
+    private Text _spFaults;
     /*[SerializeField]
     private */
 
-	void LateUpdate () {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-
-        }
+    void LateUpdate () {
         if (_timer.isTimeToText)
         {
-            _timerText.text = TimeToString();
+            _timerText.text = Utils.TimeToString(_timer.timeCounter);
             _timer.isTimeToText = false;
         }
     }
 
-    private string TimeToString()
+    public void SPGameOver(bool won, float time, int faults)
     {
-        float timeCounter = _timer.timeCounter;
-        int minutes = Mathf.FloorToInt(timeCounter / 60f);
-        int seconds = Mathf.FloorToInt(timeCounter - minutes * 60f);
-        return (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+        _timerText.gameObject.SetActive(false);
+        
+        _spGOPanel.SetActive(true);
+
+        _spState.text = won ? "Winner" : "Loser";
+        _spTime.text = Utils.TimeToString(time);
+        _spFaults.text = faults.ToString();
     }
 }

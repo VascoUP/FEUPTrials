@@ -12,7 +12,6 @@ public class CameraController : MonoBehaviour {
 
     private void Start()
     {
-        Debug.Log("Player manager is " + (playerManager == null ? "null" : "not null"));
         playerManager.NewPlayer += new SetPlayer(SetPlayerObject);
         SetPlayerObject(playerManager.activeBike);
     }

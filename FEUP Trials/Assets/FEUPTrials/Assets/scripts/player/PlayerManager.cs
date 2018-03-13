@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 public delegate void SetPlayer(GameObject bike);
+public delegate void PlayerFinish(float time, int faults);
 
 public class PlayerManager : MonoBehaviour
 {
@@ -9,16 +10,24 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private GameObject _bikePrefab;
 
+    [SerializeField]
+    private Time time;
+
     private Checkpoint _checkpoint;
     public GameObject activeBike;
     
     public SetPlayer NewPlayer;
+    public PlayerFinish GameOver;
 
     public float timeCounter = 0f;
+    private int _faults = -1;
     public bool isFinished = false;
 
     private void Start()
     {
+        NewPlayer += new SetPlayer(NewPlayerFinish);
+        GameOver += new PlayerFinish(FinishGame);
+
         // Get first checkpoint
         GameObject tmp = Utils.FilterTaggedObjectByParentAndName("Checkpoint", "Checkpoints", transform.parent.name);
         foreach(Transform child in tmp.transform)
@@ -44,30 +53,44 @@ public class PlayerManager : MonoBehaviour
             NewPlayer += new SetPlayer(gManager.SetPlayerOneObject);
         else
             NewPlayer += new SetPlayer(gManager.SetPlayerTwoObject);
-
-        // Get Checkpoint for this object
-
-
+        
         Restart();
     }
 
     private void Update ()
     {
+        if (isFinished)
+            return;
+
         bool isRestart = InputManager.IsRestart(this.transform);
         if (isRestart)
             Restart();
-
-        if(!isFinished)
-            timeCounter += Time.deltaTime;
+        
+        timeCounter += Time.deltaTime;
 	}
 
-    public void FinishGame()
+    private void FinishGame(float time, int faults)
     {
         isFinished = true;
+
+        // detach bike and player
+    }
+
+    private void NewPlayerFinish(GameObject bike)
+    {
+        BikeController bikeController = bike.GetComponent<BikeController>();
+        GameOver += new PlayerFinish(bikeController.FinishedGame);
+    }
+
+    public void FinalCheckpoint()
+    {
+        GameOver(timeCounter, _faults);
     }
 
     private void Restart()
     {
+        _faults++;
+
         // Destroy both player and bike game objects
         GameObject tmp = Utils.FilterTaggedObjectByParentAndName("Body", "Player Body", transform.parent.name);
         if (tmp != null)

@@ -5,8 +5,9 @@ using UnityEngine.SceneManagement;
 [SerializeField]
 internal class Game : IGameState
 {
-    private PrefabManager prefabs;
-
+    private enum GameState { GAME, PAUSE, GAME_OVER, ONE_PLAYER_FINISHED };
+    private GameState state = GameState.GAME;
+    
     private bool isMultiplayer;
 
     private List<GameObject> cameras = new List<GameObject>();
@@ -14,7 +15,6 @@ internal class Game : IGameState
     public Game(bool isMultiplayer = false)
     { 
         // Create an alias for the prefab manager instance
-        prefabs = GameManager.instance.prefabManager;
         this.isMultiplayer = isMultiplayer;
     }
 
@@ -31,9 +31,12 @@ internal class Game : IGameState
 
     public void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
+        if(state == GameState.GAME || state == GameState.GAME_OVER)
         {
-            GameManager.instance.ChangeState(new MainMenu());
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                GameManager.instance.ChangeState(new MainMenu());
+            }
         }
     }
 
@@ -45,15 +48,39 @@ internal class Game : IGameState
         }
     }
 
+    private void OnPlayerOneFinish(float time, int faults)
+    {
+        if(isMultiplayer)
+        {
+
+        }
+        else
+        {
+            state = GameState.GAME_OVER;
+            GameObject ui = GameObject.Find("UI Manager");
+            UIManager uiManager = ui.GetComponent<UIManager>();
+            bool won = time <= GameManager.instance.spTimeLimit && faults <= GameManager.instance.spFaultLimit;
+            uiManager.SPGameOver(won, time, faults);
+        }
+    }
+
+    private void OnPlayerTwoFinish(float time, int faults)
+    {
+
+    }
+
     private void SpawnPlayerOne()
     {
         GameObject player = GameObject.Find("Player 1");
-        GameObject playerManagerObject = Object.Instantiate(prefabs.playerManager, player.transform);
+        GameObject playerManagerObject = Object.Instantiate(GameManager.instance.prefabManager.playerManager, player.transform);
         playerManagerObject.name = "Player Manager";
 
-        AssociatePlayerManagerCamera(playerManagerObject, prefabs.camera);
+        PlayerManager playerManager = playerManagerObject.GetComponent<PlayerManager>();
+        playerManager.GameOver += new PlayerFinish(OnPlayerOneFinish);
 
-        GameObject cameraObject = Object.Instantiate(prefabs.camera, player.transform);
+        AssociatePlayerManagerCamera(playerManagerObject, GameManager.instance.prefabManager.camera);
+
+        GameObject cameraObject = Object.Instantiate(GameManager.instance.prefabManager.camera, player.transform);
         cameraObject.AddComponent<AudioListener>();
         cameraObject.layer = 8;
         cameras.Add(cameraObject);
@@ -69,7 +96,6 @@ internal class Game : IGameState
             CameraController controller = cameraObject.GetComponent<CameraController>();
             controller.offset.y = 10;
         }
-
     }
     
     private void SpawnPlayerTwo()
@@ -79,14 +105,17 @@ internal class Game : IGameState
 
         GameObject player = GameObject.Find("Player 2");
 
-        prefabs.playerManager.layer = 9;
-        GameObject playerManagerObject = Object.Instantiate(prefabs.playerManager, player.transform);
+        GameManager.instance.prefabManager.playerManager.layer = 9;
+        GameObject playerManagerObject = Object.Instantiate(GameManager.instance.prefabManager.playerManager, player.transform);
         playerManagerObject.name = "Player Manager";
-        prefabs.playerManager.layer = 8;
+        GameManager.instance.prefabManager.playerManager.layer = 8;
 
-        AssociatePlayerManagerCamera(playerManagerObject, prefabs.camera);
+        PlayerManager playerManager = playerManagerObject.GetComponent<PlayerManager>();
+        playerManager.GameOver += new PlayerFinish(OnPlayerTwoFinish);
 
-        GameObject cameraObject = Object.Instantiate(prefabs.camera, player.transform);
+        AssociatePlayerManagerCamera(playerManagerObject, GameManager.instance.prefabManager.camera);
+
+        GameObject cameraObject = Object.Instantiate(GameManager.instance.prefabManager.camera, player.transform);
         cameraObject.layer = 9;
         cameras.Add(cameraObject);
 
@@ -105,10 +134,11 @@ internal class Game : IGameState
 
     private void AssociatePlayerManagerCamera(GameObject playerManager, GameObject camera)
     {
-        CameraController controller = prefabs.camera.GetComponent<CameraController>();
+        CameraController controller = GameManager.instance.prefabManager.camera.GetComponent<CameraController>();
         if (controller != null)
         {
             controller.playerManager = playerManager.GetComponent<PlayerManager>();
         }
     }
+    
 }

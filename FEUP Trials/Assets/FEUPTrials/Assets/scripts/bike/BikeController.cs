@@ -69,18 +69,7 @@ public class BikeController : MonoBehaviour
 
         _backWheel.useMotor = false;
     }
-
-    /*private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Checkpoint" && collision.gameObject.layer == gameObject.layer)
-        {
-            Checkpoint c = collision.gameObject.GetComponent<Checkpoint>();
-            if (c != null && !c.active)
-            {
-                _playerManager.SetCheckpoint(c);
-            }
-        }
-    }*/
+    
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -90,6 +79,11 @@ public class BikeController : MonoBehaviour
         }
     }
 
+    
+    public void FinishedGame(float time, int faults)
+    {
+        StopMotion();
+    }
     
     private float DirectionalVelocity()
     {
