@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour {
 
     void Start ()
     {
-        PushStateNoLoad(new MainMenu());
+        PushState(new MainMenu());
 	}
 
 	void Update ()

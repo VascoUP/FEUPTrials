@@ -17,7 +17,7 @@ internal class MainMenu : IGameState
     {
         if (Input.GetKey(KeyCode.A))
         {
-            GameManager.instance.ChangeState(new Game());
+            GameManager.instance.ChangeState(new Intro());
         }
         if (Input.GetKey(KeyCode.S))
         {
