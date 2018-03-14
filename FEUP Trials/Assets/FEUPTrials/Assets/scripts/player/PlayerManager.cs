@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public delegate void SetPlayer(GameObject bike);
-public delegate void PlayerFinish(float time, int faults);
+public delegate void PlayerFinish(PlayerStats stats /*float time, int faults*/);
 
 public class PlayerManager : MonoBehaviour
 {
@@ -69,7 +69,7 @@ public class PlayerManager : MonoBehaviour
         timeCounter += Time.deltaTime;
 	}
 
-    private void FinishGame(float time, int faults)
+    private void FinishGame(PlayerStats stats)
     {
         isFinished = true;
 
@@ -84,7 +84,7 @@ public class PlayerManager : MonoBehaviour
 
     public void FinalCheckpoint()
     {
-        GameOver(timeCounter, _faults);
+        GameOver(new PlayerStats(timeCounter, _faults));
     }
 
     private void Restart()
@@ -95,9 +95,13 @@ public class PlayerManager : MonoBehaviour
         GameObject tmp = Utils.FilterTaggedObjectByParentAndName("Body", "Player Body", transform.parent.name);
         if (tmp != null)
             Destroy(tmp);
-        tmp = Utils.FilterTaggedObjectByParent("Bike", transform.parent.name);
-        if (tmp != null)
-            Destroy(tmp);
+
+        if (activeBike != null)
+        {
+            BikeController bikeController = activeBike.GetComponent<BikeController>();
+            GameOver -= bikeController.FinishedGame;
+            Destroy(activeBike);
+        }
 
         // Instantiate bike
         activeBike = Instantiate(_bikePrefab);

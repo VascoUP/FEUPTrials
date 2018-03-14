@@ -5,10 +5,12 @@ using UnityEngine.SceneManagement;
 [SerializeField]
 internal class Game : IGameState
 {
-    private enum GameState { GAME, PAUSE, GAME_OVER, ONE_PLAYER_FINISHED };
+    private enum GameState { GAME, PAUSE, GAME_OVER };
     private GameState state = GameState.GAME;
     
     private bool isMultiplayer;
+    private PlayerStats p1PlayerStats;
+    private PlayerStats p2PlayerStats;
 
     private List<GameObject> cameras = new List<GameObject>();
 
@@ -42,31 +44,58 @@ internal class Game : IGameState
 
     public void OnExit()
     {
-        // Cleanup cameras
-        foreach (GameObject cam in cameras) {
-            Object.Destroy(cam);
+
+    }
+
+    private void OnMPPlayerFinish()
+    {
+        if(p1PlayerStats != null && p2PlayerStats != null)
+        {
+            // time point go from 0 to 10
+            float p1TimePoints = p1PlayerStats.time >= p2PlayerStats.time ? 10 : 0;
+            float p2TimePoints = p1PlayerStats.time <= p2PlayerStats.time ? 10 : 0;
+
+            // fault points go from 0 to 10
+            float p1FaultPoints = p1PlayerStats.faults >= p2PlayerStats.faults ? 10 : 0;
+            float p2FaultPoints = p1PlayerStats.faults <= p2PlayerStats.faults ? 10 : 0;
+
+            // player points go from 0 to 20
+            float p1Points = p1TimePoints + p1FaultPoints;
+            float p2Points = p2TimePoints + p2FaultPoints;
+            
+            state = GameState.GAME_OVER;
+
+            GameObject ui = GameObject.Find("UI Manager");
+            UIManager uiManager = ui.GetComponent<UIManager>();
+            uiManager.MPGameOver(p1Points > p2Points, p1PlayerStats, p1Points, 
+                                p1Points < p2Points, p2PlayerStats, p2Points);
         }
     }
 
-    private void OnPlayerOneFinish(float time, int faults)
+    private void OnPlayerOneFinish(PlayerStats stats)
     {
-        if(isMultiplayer)
-        {
+        p1PlayerStats = stats;
 
+        if (isMultiplayer)
+        {
+            OnMPPlayerFinish();
         }
         else
         {
             state = GameState.GAME_OVER;
+
             GameObject ui = GameObject.Find("UI Manager");
             UIManager uiManager = ui.GetComponent<UIManager>();
-            bool won = time <= GameManager.instance.spTimeLimit && faults <= GameManager.instance.spFaultLimit;
-            uiManager.SPGameOver(won, time, faults);
+            bool won = p1PlayerStats.time <= GameManager.instance.spTimeLimit && p1PlayerStats.faults <= GameManager.instance.spFaultLimit;
+            uiManager.SPGameOver(won, p1PlayerStats);
         }
     }
 
-    private void OnPlayerTwoFinish(float time, int faults)
+    private void OnPlayerTwoFinish(PlayerStats stats)
     {
+        p2PlayerStats = stats;
 
+        OnMPPlayerFinish();
     }
 
     private void SpawnPlayerOne()
@@ -141,4 +170,16 @@ internal class Game : IGameState
         }
     }
     
+}
+
+public class PlayerStats
+{
+    public float time;
+    public int faults;
+
+    public PlayerStats(float time, int faults)
+    {
+        this.time = time;
+        this.faults = faults;
+    }
 }
