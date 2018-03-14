@@ -6,8 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/FEUPTrials/Assets/_scenes/Start.unity
+    guid: a043491b7a26dfd46a399baaff2447ae
+  - enabled: 1
+    path: Assets/FEUPTrials/Assets/_scenes/Intro.unity
+    guid: 233b2f5209c10a947a8a6fbd5c7606fa
+  - enabled: 1
     path: Assets/FEUPTrials/Assets/_scenes/Game.unity
     guid: 3544b107c360e054080b691b35f0bfb0
-  - enabled: 1
-    path: Assets/FEUPTrials/Assets/_scenes/Menu.unity
-    guid: aefbd50b40ba0fb48a3e0ca2ff8510e1
