@@ -54,4 +54,9 @@ public class InputManager {
     {
         return GetButton(trans, "Restart", ButtonType.DOWN);
     }
+
+    public static bool IsNext()
+    {
+        return Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0);
+    }
 }

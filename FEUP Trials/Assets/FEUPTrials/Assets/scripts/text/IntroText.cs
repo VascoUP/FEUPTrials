@@ -56,7 +56,7 @@ public class IntroText : MonoBehaviour {
             }
         } else
        
-        if (endOfLine && Input.GetKey(KeyCode.Space))
+        if (endOfLine && InputManager.IsNext())
         {
             line++;
             cursor = 0;
@@ -65,7 +65,7 @@ public class IntroText : MonoBehaviour {
             talkingHead.GetComponent<Animator>().enabled = true;
         }
 
-        if (line >= lines.Length && Input.GetKey(KeyCode.Space))
+        if (line >= lines.Length && InputManager.IsNext())
         {
             GameManager.instance.ChangeState(new Game());
         }
