@@ -47,22 +47,55 @@ internal class Game : IGameState
 
     }
 
+    private int CalculatePoints(float maxValue, float value)
+    {
+        int points = 10;
+        int frac = 10;
+
+        while(points >= 2)
+        {
+            if (maxValue * frac / 10f >= value)
+                return points;
+
+            points--;
+            frac++;
+        }
+
+        return points;
+    }
+
     private void OnMPPlayerFinish()
     {
         if(p1PlayerStats != null && p2PlayerStats != null)
         {
+            int p1Points = 0;
+            int p2Points = 0;
+
             // time point go from 0 to 10
-            float p1TimePoints = p1PlayerStats.time >= p2PlayerStats.time ? 10 : 0;
-            float p2TimePoints = p1PlayerStats.time <= p2PlayerStats.time ? 10 : 0;
+            if (p1PlayerStats.time <= p2PlayerStats.time)
+            {
+                p1Points += 10;
+                p2Points += CalculatePoints(p1PlayerStats.time, p2PlayerStats.time);
+
+            }
+            else
+            {
+                p2Points += 10;
+                p1Points += CalculatePoints(p2PlayerStats.time, p1PlayerStats.time);
+            }
 
             // fault points go from 0 to 10
-            float p1FaultPoints = p1PlayerStats.faults >= p2PlayerStats.faults ? 10 : 0;
-            float p2FaultPoints = p1PlayerStats.faults <= p2PlayerStats.faults ? 10 : 0;
+            if (p1PlayerStats.faults <= p2PlayerStats.faults)
+            {
+                p1Points += 10;
+                p2Points += CalculatePoints(p1PlayerStats.faults, p2PlayerStats.faults);
+            }
+            else
+            {
+                p2Points += 10;
+                p1Points += CalculatePoints(p2PlayerStats.faults, p1PlayerStats.faults);
+            }
 
-            // player points go from 0 to 20
-            float p1Points = p1TimePoints + p1FaultPoints;
-            float p2Points = p2TimePoints + p2FaultPoints;
-            
             state = GameState.GAME_OVER;
 
             GameObject ui = GameObject.Find("UI Manager");

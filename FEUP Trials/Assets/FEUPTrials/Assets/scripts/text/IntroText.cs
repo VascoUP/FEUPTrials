@@ -24,7 +24,7 @@ public class IntroText : MonoBehaviour {
 
     private bool endOfLine = false;
 
-    private bool stopAnimation = false;
+    //private bool stopAnimation = false;
 
     void Start() {
         lines = file.text.Split('\n');
