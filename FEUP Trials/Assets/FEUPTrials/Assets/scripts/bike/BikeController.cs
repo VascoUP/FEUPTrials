@@ -80,11 +80,12 @@ public class BikeController : MonoBehaviour
     }
 
     
-    public void FinishedGame(float time, int faults)
+    public void FinishedGame(PlayerStats stats)
     {
         StopMotion();
     }
     
+
     private float DirectionalVelocity()
     {
         float velocity = Mathf.Cos(transform.rotation.z) * _bikeRB.velocity.x + Mathf.Sin(transform.rotation.z) * _bikeRB.velocity.y;
