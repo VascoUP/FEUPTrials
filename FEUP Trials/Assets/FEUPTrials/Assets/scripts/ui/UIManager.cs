@@ -58,7 +58,7 @@ public class UIManager : MonoBehaviour {
         _mainMenuButton.onClick.AddListener(() =>
         {
             Time.timeScale = 1;
-            ExitGame();
+            QuitGame();
         });
         _spMainMenuButton.onClick.AddListener(() =>
         {
@@ -91,7 +91,7 @@ public class UIManager : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 Time.timeScale = 1;
-                ExitGame();
+                QuitGame();
             }
             else if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -108,6 +108,10 @@ public class UIManager : MonoBehaviour {
         }
     }
 
+    private void QuitGame()
+    {
+        GameManager.instance.ChangeState(new MainMenu());
+    }
     
     private void ExitGame()
     {
@@ -159,6 +163,8 @@ public class UIManager : MonoBehaviour {
 
     public void SPGameOver(bool won, PlayerStats stats)
     {
+        state = GameState.GAME_OVER;
+
         SetTimerPanel(false);
 
         _spGOPanel.SetActive(true);
@@ -171,6 +177,8 @@ public class UIManager : MonoBehaviour {
     public void MPGameOver(bool p1Won, PlayerStats p1Stats, float p1Total,
                             bool p2Won, PlayerStats p2Stats, float p2Total)
     {
+        state = GameState.GAME_OVER;
+
         SetTimerPanel(false);
 
         _mpGOPanel.SetActive(true);
