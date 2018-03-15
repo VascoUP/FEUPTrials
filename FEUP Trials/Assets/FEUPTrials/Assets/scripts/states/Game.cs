@@ -33,74 +33,10 @@ internal class Game : IGameState
     }
 
     public void Update()
-    {
-        if(state == GameState.GAME_OVER)
-        {
-            if (Input.GetKeyDown(KeyCode.Escape) || InputManager.IsNext())
-            {
-                ExitGame();
-            }
-        }
-        else if(state == GameState.GAME)
-        {
-            if(Input.GetKeyDown(KeyCode.Escape))
-            {
-                PauseMenu(true);
-            }
-        }
-        else if(state == GameState.PAUSE)
-        {
-            if(Input.GetKeyDown(KeyCode.Space))
-            {
-                Time.timeScale = 1;
-                ExitGame();
-            }
-            else if(Input.GetKeyDown(KeyCode.Escape))
-            {
-                PauseMenu(false);
-            }
-        }
-    }
+    {}
 
     public void OnExit()
     {
-
-    }
-
-
-    private void ExitGame()
-    {
-        GameManager.instance.ChangeState(new MainMenu());
-    }
-
-    private void PauseMenu(bool isPause)
-    {
-        int timeScale;
-        GameState nextState;
-
-        if(isPause)
-        {
-            timeScale = 0;
-            nextState = GameState.PAUSE;
-        }
-        else
-        {
-            timeScale = 1;
-            nextState = GameState.GAME;
-        }
-
-        PauseMenu(timeScale, isPause, nextState);
-    }
-
-    private void PauseMenu(int timeScale, bool isPause, GameState state)
-    {
-        Time.timeScale = timeScale;
-        
-        GameObject ui = GameObject.Find("UI Manager");
-        UIManager uiManager = ui.GetComponent<UIManager>();
-        uiManager.Pause(isPause);
-
-        this.state = state;
 
     }
 

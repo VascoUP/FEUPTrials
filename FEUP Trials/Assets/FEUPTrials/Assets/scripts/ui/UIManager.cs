@@ -2,6 +2,9 @@
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
+    private enum GameState { GAME, PAUSE, GAME_OVER };
+    private GameState state = GameState.GAME;
+
     [SerializeField]
     private Timer _timer;
     [SerializeField]
@@ -9,6 +12,10 @@ public class UIManager : MonoBehaviour {
 
     [SerializeField]
     private GameObject _pausePanel;
+    [SerializeField]
+    private Button _resumeButton;
+    [SerializeField]
+    private Button _mainMenuButton;
 
     [SerializeField]
     private GameObject _spGOPanel;
@@ -18,6 +25,8 @@ public class UIManager : MonoBehaviour {
     private Text _spTime;
     [SerializeField]
     private Text _spFaults;
+    [SerializeField]
+    private Button _spMainMenuButton;
 
     [SerializeField]
     private GameObject _mpGOPanel;
@@ -37,14 +46,105 @@ public class UIManager : MonoBehaviour {
     private Text _mpP2Total;
     [SerializeField]
     private Text _mpP2State;
+    [SerializeField]
+    private Button _mpMainMenuButton;
 
-    void LateUpdate () {
+    private void Start()
+    {
+        _resumeButton.onClick.AddListener(() =>
+        {
+            PauseMenu(false);
+        });
+        _mainMenuButton.onClick.AddListener(() =>
+        {
+            Time.timeScale = 1;
+            ExitGame();
+        });
+        _spMainMenuButton.onClick.AddListener(() =>
+        {
+            ExitGame();
+        });
+        _mpMainMenuButton.onClick.AddListener(() =>
+        {
+            ExitGame();
+        });
+    }
+
+    private void Update()
+    {
+        if (state == GameState.GAME_OVER)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                ExitGame();
+            }
+        }
+        else if (state == GameState.GAME)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseMenu(true);
+            }
+        }
+        else if (state == GameState.PAUSE)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Time.timeScale = 1;
+                ExitGame();
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseMenu(false);
+            }
+        }
+    }
+
+    private void LateUpdate () {
         if (_timer.isTimeToText)
         {
             _timerText.text = Utils.TimeToString(_timer.timeCounter);
             _timer.isTimeToText = false;
         }
     }
+
+    
+    private void ExitGame()
+    {
+        GameManager.instance.ChangeState(new MainMenu());
+    }
+
+    private void PauseMenu(bool isPause)
+    {
+        int timeScale;
+        GameState nextState;
+
+        if (isPause)
+        {
+            timeScale = 0;
+            nextState = GameState.PAUSE;
+        }
+        else
+        {
+            timeScale = 1;
+            nextState = GameState.GAME;
+        }
+
+        PauseMenu(timeScale, isPause, nextState);
+    }
+
+    private void PauseMenu(int timeScale, bool isPause, GameState state)
+    {
+        Time.timeScale = timeScale;
+
+        GameObject ui = GameObject.Find("UI Manager");
+        UIManager uiManager = ui.GetComponent<UIManager>();
+        uiManager.Pause(isPause);
+
+        this.state = state;
+
+    }
+
 
     private void SetTimerPanel(bool active)
     {
