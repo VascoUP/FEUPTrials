@@ -38,7 +38,7 @@ internal class Game : IGameState
         {
             if (Input.GetKeyDown(KeyCode.Escape) || InputManager.IsNext())
             {
-                ExitGame();
+                GameManager.instance.ChangeState(new Outro());
             }
         }
         else if(state == GameState.GAME)
@@ -46,6 +46,11 @@ internal class Game : IGameState
             if(Input.GetKeyDown(KeyCode.Escape))
             {
                 PauseMenu(true);
+            }
+            // TODO: Apagar isto
+            if (Input.GetKeyDown(KeyCode.F12))
+            {
+                state = GameState.GAME_OVER;
             }
         }
         else if(state == GameState.PAUSE)
