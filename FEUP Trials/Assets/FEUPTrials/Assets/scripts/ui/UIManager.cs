@@ -111,7 +111,7 @@ public class UIManager : MonoBehaviour {
     
     private void ExitGame()
     {
-        GameManager.instance.ChangeState(new MainMenu());
+        GameManager.instance.ChangeState(new Outro());
     }
 
     private void PauseMenu(bool isPause)
