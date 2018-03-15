@@ -4,10 +4,7 @@ using UnityEngine.SceneManagement;
 
 [SerializeField]
 internal class Game : IGameState
-{
-    private enum GameState { GAME, PAUSE, GAME_OVER };
-    private GameState state = GameState.GAME;
-    
+{    
     private bool isMultiplayer;
     private PlayerStats p1PlayerStats;
     private PlayerStats p2PlayerStats;
@@ -90,8 +87,6 @@ internal class Game : IGameState
                 p1Points += CalculatePoints(p2PlayerStats.faults, p1PlayerStats.faults);
             }
 
-            state = GameState.GAME_OVER;
-
             GameObject ui = GameObject.Find("UI Manager");
             UIManager uiManager = ui.GetComponent<UIManager>();
             uiManager.MPGameOver(p1Points > p2Points, p1PlayerStats, p1Points, 
@@ -109,8 +104,6 @@ internal class Game : IGameState
         }
         else
         {
-            state = GameState.GAME_OVER;
-
             GameObject ui = GameObject.Find("UI Manager");
             UIManager uiManager = ui.GetComponent<UIManager>();
             bool won = p1PlayerStats.time <= GameManager.instance.spTimeLimit && p1PlayerStats.faults <= GameManager.instance.spFaultLimit;

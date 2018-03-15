@@ -10,6 +10,7 @@ public class Interactable : MonoBehaviour {
 
     public GameObject interactionObject;
     private IInteract _interaction;
+    private Animator _animator;
     
     [SerializeField]
     private GameObject _interactionTextObject;
@@ -27,12 +28,16 @@ public class Interactable : MonoBehaviour {
     private void Start()
     {
         _interaction = (IInteract) interactionObject.GetComponent(typeof(IInteract));
+        _animator = GetComponent<Animator>();
         _instantiatedTextObjects = new GameObject[2];
     }
 
     private IEnumerator ChannelingTime()
     {
         state = InteractionStates.CHANNELING;
+
+        if (_animator != null)
+            _animator.Play("ChannelingAnimation");
 
         yield return new WaitForSeconds(_channelingTime);
 
@@ -141,6 +146,8 @@ public class Interactable : MonoBehaviour {
         _interaction.Cancel();
 
         state = InteractionStates.INTERACTABLE;
+        if (_animator != null)
+            _animator.Rebind();
 
         SetText(0, "Interact");
         SetText(1, "Interact");
