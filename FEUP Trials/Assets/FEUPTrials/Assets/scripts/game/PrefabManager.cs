@@ -6,10 +6,8 @@ internal class PrefabManager : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
     }
-
-    [SerializeField]
+    
     public new GameObject camera;
-
-    [SerializeField]
+    
     public GameObject playerManager;
 }

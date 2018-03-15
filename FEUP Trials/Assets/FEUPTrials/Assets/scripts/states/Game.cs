@@ -4,10 +4,7 @@ using UnityEngine.SceneManagement;
 
 [SerializeField]
 internal class Game : IGameState
-{
-    private enum GameState { GAME, PAUSE, GAME_OVER };
-    private GameState state = GameState.GAME;
-    
+{    
     private bool isMultiplayer;
     private PlayerStats p1PlayerStats;
     private PlayerStats p2PlayerStats;
@@ -33,79 +30,10 @@ internal class Game : IGameState
     }
 
     public void Update()
-    {
-        if(state == GameState.GAME_OVER)
-        {
-            if (Input.GetKeyDown(KeyCode.Escape) || InputManager.IsNext())
-            {
-                GameManager.instance.ChangeState(new Outro());
-            }
-        }
-        else if(state == GameState.GAME)
-        {
-            if(Input.GetKeyDown(KeyCode.Escape))
-            {
-                PauseMenu(true);
-            }
-            // TODO: Apagar isto
-            if (Input.GetKeyDown(KeyCode.F12))
-            {
-                state = GameState.GAME_OVER;
-            }
-        }
-        else if(state == GameState.PAUSE)
-        {
-            if(Input.GetKeyDown(KeyCode.Space))
-            {
-                Time.timeScale = 1;
-                ExitGame();
-            }
-            else if(Input.GetKeyDown(KeyCode.Escape))
-            {
-                PauseMenu(false);
-            }
-        }
-    }
+    {}
 
     public void OnExit()
     {
-
-    }
-
-
-    private void ExitGame()
-    {
-        GameManager.instance.ChangeState(new MainMenu());
-    }
-
-    private void PauseMenu(bool isPause)
-    {
-        int timeScale;
-        GameState nextState;
-
-        if(isPause)
-        {
-            timeScale = 0;
-            nextState = GameState.PAUSE;
-        }
-        else
-        {
-            timeScale = 1;
-            nextState = GameState.GAME;
-        }
-
-        PauseMenu(timeScale, isPause, nextState);
-    }
-
-    private void PauseMenu(int timeScale, bool isPause, GameState state)
-    {
-        Time.timeScale = timeScale;
-        
-        GameObject ui = GameObject.Find("UI Manager");
-        UIManager uiManager = ui.GetComponent<UIManager>();
-        uiManager.Pause(isPause);
-
-        this.state = state;
 
     }
 
@@ -159,8 +87,6 @@ internal class Game : IGameState
                 p1Points += CalculatePoints(p2PlayerStats.faults, p1PlayerStats.faults);
             }
 
-            state = GameState.GAME_OVER;
-
             GameObject ui = GameObject.Find("UI Manager");
             UIManager uiManager = ui.GetComponent<UIManager>();
             uiManager.MPGameOver(p1Points > p2Points, p1PlayerStats, p1Points, 
@@ -178,8 +104,6 @@ internal class Game : IGameState
         }
         else
         {
-            state = GameState.GAME_OVER;
-
             GameObject ui = GameObject.Find("UI Manager");
             UIManager uiManager = ui.GetComponent<UIManager>();
             bool won = p1PlayerStats.time <= GameManager.instance.spTimeLimit && p1PlayerStats.faults <= GameManager.instance.spFaultLimit;

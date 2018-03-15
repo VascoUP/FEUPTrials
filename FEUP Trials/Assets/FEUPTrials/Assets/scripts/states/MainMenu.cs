@@ -9,24 +9,11 @@ internal class MainMenu : IGameState
     }
 
     public void OnEnter()
-    {
-
-    }
+    {}
 
     public void Update()
-    {
-        if (Input.GetKey(KeyCode.A))
-        {
-            GameManager.instance.ChangeState(new Intro());
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            GameManager.instance.ChangeState(new Game(true));
-        }
-    }
+    {}
 
     public void OnExit()
-    {
-
-    }
+    {}
 }
