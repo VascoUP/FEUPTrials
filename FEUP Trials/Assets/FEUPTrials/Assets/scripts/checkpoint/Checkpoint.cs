@@ -19,7 +19,7 @@ public class Checkpoint : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Bike" && collision.gameObject.layer == gameObject.layer && !active && _playerManager != null)
+        if (collision.gameObject.tag == "Bike" && collision.gameObject.layer == gameObject.layer + 1 && !active && _playerManager != null)
         {
             _playerManager.SetCheckpoint(this);
             ActivateCheckpoint();

@@ -132,7 +132,7 @@ internal class Game : IGameState
 
         GameObject cameraObject = Object.Instantiate(GameManager.instance.prefabManager.camera, player.transform);
         cameraObject.AddComponent<AudioListener>();
-        cameraObject.layer = 8;
+        cameraObject.layer = LayerMask.NameToLayer("Player 1");
         cameras.Add(cameraObject);
 
         Camera camera = cameraObject.GetComponent<Camera>();
@@ -155,10 +155,10 @@ internal class Game : IGameState
 
         GameObject player = GameObject.Find("Player 2");
 
-        GameManager.instance.prefabManager.playerManager.layer = 9;
+        GameManager.instance.prefabManager.playerManager.layer = LayerMask.NameToLayer("Player 2");
         GameObject playerManagerObject = Object.Instantiate(GameManager.instance.prefabManager.playerManager, player.transform);
         playerManagerObject.name = "Player Manager";
-        GameManager.instance.prefabManager.playerManager.layer = 8;
+        GameManager.instance.prefabManager.playerManager.layer = LayerMask.NameToLayer("Player 1");
 
         PlayerManager playerManager = playerManagerObject.GetComponent<PlayerManager>();
         playerManager.GameOver += new PlayerFinish(OnPlayerTwoFinish);
@@ -166,7 +166,7 @@ internal class Game : IGameState
         AssociatePlayerManagerCamera(playerManagerObject, GameManager.instance.prefabManager.camera);
 
         GameObject cameraObject = Object.Instantiate(GameManager.instance.prefabManager.camera, player.transform);
-        cameraObject.layer = 9;
+        cameraObject.layer = LayerMask.NameToLayer("Player 2");
         cameras.Add(cameraObject);
 
         Camera camera = cameraObject.GetComponent<Camera>();
@@ -176,7 +176,8 @@ internal class Game : IGameState
         camera.cullingMask = (1 << LayerMask.NameToLayer("Default")) | (1 << LayerMask.NameToLayer("TransparentFX"))
             | (1 << LayerMask.NameToLayer("Ignore Raycast")) | (1 << LayerMask.NameToLayer("Water"))
             | (1 << LayerMask.NameToLayer("UI")) | (1 << LayerMask.NameToLayer("Player 2"))
-            | (1 << LayerMask.NameToLayer("Background Image"));
+            | (1 << LayerMask.NameToLayer("Background Image") | (1 << LayerMask.NameToLayer("Bike 1"))
+            | (1 << LayerMask.NameToLayer("Bike 2")));
 
         CameraController controller = cameraObject.GetComponent<CameraController>();
         controller.offset.y = 10;

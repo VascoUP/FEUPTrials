@@ -1179,7 +1179,7 @@ GameObject:
   m_Component:
   - component: {fileID: 188284254}
   - component: {fileID: 188284255}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1254,7 +1254,7 @@ GameObject:
   - component: {fileID: 202261371}
   - component: {fileID: 202261370}
   - component: {fileID: 202261369}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint 6
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
@@ -1638,7 +1638,7 @@ GameObject:
   m_Component:
   - component: {fileID: 307524748}
   - component: {fileID: 307524749}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2141,7 +2141,7 @@ GameObject:
   - component: {fileID: 421458640}
   - component: {fileID: 421458639}
   - component: {fileID: 421458638}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint 1
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
@@ -2515,7 +2515,7 @@ GameObject:
   m_Component:
   - component: {fileID: 496255995}
   - component: {fileID: 496255996}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint Pin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4075,7 +4075,7 @@ GameObject:
   m_Component:
   - component: {fileID: 759584861}
   - component: {fileID: 759584862}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Background Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4148,7 +4148,7 @@ GameObject:
   m_Component:
   - component: {fileID: 783906847}
   - component: {fileID: 783906848}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4606,7 +4606,7 @@ GameObject:
   m_Component:
   - component: {fileID: 810249960}
   - component: {fileID: 810249961}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint Pin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5881,7 +5881,7 @@ GameObject:
   m_Component:
   - component: {fileID: 970278160}
   - component: {fileID: 970278161}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6221,7 +6221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1059017863}
   - component: {fileID: 1059017864}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint Pin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6344,6 +6344,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4133911325852256, guid: 4e96d274fd21fcb41ace5cf23ec9b127, type: 2}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1289283638373626, guid: 4e96d274fd21fcb41ace5cf23ec9b127, type: 2}
+      propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -8104,6 +8108,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1888423550886098, guid: 991fbef90f120364886064841b3b1a6e, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 991fbef90f120364886064841b3b1a6e, type: 2}
   m_IsPrefabParent: 0
@@ -8570,7 +8578,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1552000255}
   - component: {fileID: 1552000256}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint 0
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
@@ -8646,6 +8654,10 @@ Prefab:
     - target: {fileID: 1888423550886098, guid: 991fbef90f120364886064841b3b1a6e, type: 2}
       propertyPath: m_Name
       value: Ground (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1888423550886098, guid: 991fbef90f120364886064841b3b1a6e, type: 2}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 991fbef90f120364886064841b3b1a6e, type: 2}
@@ -8950,7 +8962,7 @@ GameObject:
   - component: {fileID: 1660723600}
   - component: {fileID: 1660723599}
   - component: {fileID: 1660723598}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint 5
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
@@ -9491,7 +9503,7 @@ GameObject:
   - component: {fileID: 1762105747}
   - component: {fileID: 1762105746}
   - component: {fileID: 1762105745}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint 7
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
@@ -9611,6 +9623,10 @@ Prefab:
     - target: {fileID: 1888423550886098, guid: 991fbef90f120364886064841b3b1a6e, type: 2}
       propertyPath: m_Name
       value: Ground (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1888423550886098, guid: 991fbef90f120364886064841b3b1a6e, type: 2}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 991fbef90f120364886064841b3b1a6e, type: 2}
@@ -9810,7 +9826,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1846089894}
   - component: {fileID: 1846089895}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9883,7 +9899,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1847860653}
   - component: {fileID: 1847860654}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint Pin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10032,7 +10048,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1878739712}
   - component: {fileID: 1878739713}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint Pin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10362,7 +10378,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1928990622}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Player 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10466,7 +10482,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1980523520}
   - component: {fileID: 1980523521}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint Pin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10614,7 +10630,7 @@ GameObject:
   - component: {fileID: 2008488880}
   - component: {fileID: 2008488879}
   - component: {fileID: 2008488878}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint 2
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
@@ -11105,7 +11121,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 2062242812}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoints
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
@@ -11220,7 +11236,7 @@ GameObject:
   - component: {fileID: 2074249232}
   - component: {fileID: 2074249231}
   - component: {fileID: 2074249230}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint 4
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
@@ -11487,6 +11503,10 @@ Prefab:
       propertyPath: m_Name
       value: Ground (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1888423550886098, guid: 991fbef90f120364886064841b3b1a6e, type: 2}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 991fbef90f120364886064841b3b1a6e, type: 2}
   m_IsPrefabParent: 0
@@ -11504,7 +11524,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2090703133}
   - component: {fileID: 2090703134}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint Pin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11577,7 +11597,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2094380598}
   - component: {fileID: 2094380599}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11652,7 +11672,7 @@ GameObject:
   - component: {fileID: 2118962243}
   - component: {fileID: 2118962242}
   - component: {fileID: 2118962241}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint 3
   m_TagString: Checkpoint
   m_Icon: {fileID: 0}
@@ -11739,7 +11759,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2141982917}
   - component: {fileID: 2141982918}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Checkpoint Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}

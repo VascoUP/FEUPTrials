@@ -108,14 +108,14 @@ public class PlayerManager : MonoBehaviour
         activeBike.name = "Bike";
         activeBike.transform.parent = transform.parent;
         activeBike.transform.position = _checkpoint.BikeNewPosition();
-        Utils.SetLayer(activeBike.transform, gameObject.layer);
+        Utils.SetLayer(activeBike.transform, gameObject.layer + 1);
 
         // Instantiate player
         tmp = Instantiate(_playerPrefab);
         tmp.name = "Player Body";
         tmp.transform.parent = transform.parent;
         tmp.transform.position = _checkpoint.BikeNewPosition();
-        Utils.SetLayer(tmp.transform, gameObject.layer);
+        Utils.SetLayer(tmp.transform, gameObject.layer + 1);
         
         if(NewPlayer != null)
             NewPlayer(activeBike);
