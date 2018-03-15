@@ -20,6 +20,7 @@ internal class Game : IGameState
         this.isMultiplayer = isMultiplayer;
     }
 
+
     public void LoadScene()
     {
         SceneManager.LoadScene("Game");
@@ -33,11 +34,30 @@ internal class Game : IGameState
 
     public void Update()
     {
-        if(state == GameState.GAME || state == GameState.GAME_OVER)
+        if(state == GameState.GAME_OVER)
         {
-            if (Input.GetKey(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape) || InputManager.IsNext())
             {
-                GameManager.instance.ChangeState(new MainMenu());
+                ExitGame();
+            }
+        }
+        else if(state == GameState.GAME)
+        {
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseMenu(true);
+            }
+        }
+        else if(state == GameState.PAUSE)
+        {
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                Time.timeScale = 1;
+                ExitGame();
+            }
+            else if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseMenu(false);
             }
         }
     }
@@ -46,6 +66,44 @@ internal class Game : IGameState
     {
 
     }
+
+
+    private void ExitGame()
+    {
+        GameManager.instance.ChangeState(new MainMenu());
+    }
+
+    private void PauseMenu(bool isPause)
+    {
+        int timeScale;
+        GameState nextState;
+
+        if(isPause)
+        {
+            timeScale = 0;
+            nextState = GameState.PAUSE;
+        }
+        else
+        {
+            timeScale = 1;
+            nextState = GameState.GAME;
+        }
+
+        PauseMenu(timeScale, isPause, nextState);
+    }
+
+    private void PauseMenu(int timeScale, bool isPause, GameState state)
+    {
+        Time.timeScale = timeScale;
+        
+        GameObject ui = GameObject.Find("UI Manager");
+        UIManager uiManager = ui.GetComponent<UIManager>();
+        uiManager.Pause(isPause);
+
+        this.state = state;
+
+    }
+
 
     private int CalculatePoints(float maxValue, float value)
     {
@@ -131,6 +189,7 @@ internal class Game : IGameState
         OnMPPlayerFinish();
     }
 
+
     private void SpawnPlayerOne()
     {
         GameObject player = GameObject.Find("Player 1");
@@ -196,7 +255,7 @@ internal class Game : IGameState
 
     private void AssociatePlayerManagerCamera(GameObject playerManager, GameObject camera)
     {
-        CameraController controller = GameManager.instance.prefabManager.camera.GetComponent<CameraController>();
+        CameraController controller = camera.GetComponent<CameraController>();
         if (controller != null)
         {
             controller.playerManager = playerManager.GetComponent<PlayerManager>();

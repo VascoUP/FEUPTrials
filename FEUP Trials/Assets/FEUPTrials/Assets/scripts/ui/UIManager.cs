@@ -8,6 +8,9 @@ public class UIManager : MonoBehaviour {
     private Text _timerText;
 
     [SerializeField]
+    private GameObject _pausePanel;
+
+    [SerializeField]
     private GameObject _spGOPanel;
     [SerializeField]
     private Text _spState;
@@ -43,14 +46,20 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    private void GameOver()
+    private void SetTimerPanel(bool active)
     {
-        _timerText.gameObject.SetActive(false);
+        _timerText.gameObject.SetActive(active);
+    }
+
+    public void Pause(bool active)
+    {
+        _pausePanel.SetActive(active);
+        SetTimerPanel(!active);
     }
 
     public void SPGameOver(bool won, PlayerStats stats)
     {
-        GameOver();
+        SetTimerPanel(false);
 
         _spGOPanel.SetActive(true);
 
@@ -62,7 +71,7 @@ public class UIManager : MonoBehaviour {
     public void MPGameOver(bool p1Won, PlayerStats p1Stats, float p1Total,
                             bool p2Won, PlayerStats p2Stats, float p2Total)
     {
-        GameOver();
+        SetTimerPanel(false);
 
         _mpGOPanel.SetActive(true);
         
