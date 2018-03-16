@@ -747,7 +747,8 @@ MonoBehaviour:
     10: ESC - Pause the game
 
 
-    Each player has a maximum of 15 failures to do and a maximum of 4 minutes to play'
+    On single player mode the player has a maximum of 15 failures to do and a maximum
+    of 4 minutes to win'
 --- !u!222 &1157322201
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1023,7 +1024,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1383535567
 RectTransform:
   m_ObjectHideFlags: 0
