@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/FEUPTrials/Assets/_scenes/Start.unity
     guid: a043491b7a26dfd46a399baaff2447ae
   - enabled: 1
+    path: Assets/FEUPTrials/Assets/_scenes/MainMenu.unity
+    guid: 8fd5a5571074af0489df48667944b400
+  - enabled: 1
     path: Assets/FEUPTrials/Assets/_scenes/Intro.unity
     guid: 233b2f5209c10a947a8a6fbd5c7606fa
   - enabled: 1
@@ -17,6 +20,3 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/FEUPTrials/Assets/_scenes/Outro.unity
     guid: a8603b0d33d52764b9000df5482b70f4
-  - enabled: 1
-    path: Assets/FEUPTrials/Assets/_scenes/MainMenu.unity
-    guid: 8fd5a5571074af0489df48667944b400
