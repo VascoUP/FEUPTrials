@@ -5,7 +5,7 @@ internal class MainMenu : IGameState
 {
     public void LoadScene()
     {
-        SceneManager.LoadScene("Start");
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void OnEnter()
