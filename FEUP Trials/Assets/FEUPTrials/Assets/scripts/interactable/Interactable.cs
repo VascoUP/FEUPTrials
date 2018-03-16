@@ -111,7 +111,7 @@ public class Interactable : MonoBehaviour {
             _instantiatedTextObjects[index] = Instantiate(_interactionTextObject, transform);
             _instantiatedTextObjects[index].transform.Rotate(Vector3.forward * _rotation);
             _instantiatedTextObjects[index].transform.localPosition = new Vector3(_offset.x, _offset.y, 0);
-            Utils.SetLayer(_instantiatedTextObjects[index].transform, 8 + index);
+            Utils.SetLayer(_instantiatedTextObjects[index].transform, 8 + index * 2);
             SetText(index, text);
         }
     }
