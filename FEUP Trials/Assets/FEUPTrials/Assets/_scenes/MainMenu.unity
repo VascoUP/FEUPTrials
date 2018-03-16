@@ -688,8 +688,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -50}
-  m_SizeDelta: {x: 700, y: 250}
+  m_AnchoredPosition: {x: 0, y: -6.5888615}
+  m_SizeDelta: {x: 700, y: 465}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1157322200
 MonoBehaviour:
@@ -723,16 +723,31 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "You can choose between the single player or multiplayer mode\n\n1: To advance
-    the game's history: LEFT BUTTON or SPACE BAR \n2: Press W to walk forward; S to
-    walk back; A to lean back the bike; D to lean forward\n3: To interact with objects:
-    E button\n\nOn multiplayer mode, the player on the left uses the commands like
-    the one on single player mode, but the one on the right side needs to:\n\n4: Press
-    the UP ARROW to walk forward; DOWN ARROW to walk back; LEFT ARROW to lean back
-    the bike; RIGHT ARROW to lean forward\n5: To interact with objects: I button\n\nOn
-    both modes each player can press ESC to go to the Pause Menu where teh ESC button
-    returns to the game and the SPACE BAR exits the game and redirects to the game's
-    main menu "
+  m_Text: '1: Mouse''s LEFT BUTTON and Space Bar - Advancing the game''s history
+
+    2: W and S - Bike movement
+
+    3: A and D - Leaning the bike
+
+    4: E - Interact with objects
+
+    5: R - Return to the previous checkpoint
+
+
+    Seconf Player on MultiPlayer Mode
+
+
+    7:  Arrow Keys - Bike movement and leaning the bike
+
+    8: I - Interact with objects
+
+    9: P - Return to the previous checkpoint
+
+
+    10: ESC - Pause the game
+
+
+    Each player has a maximum of 15 failures to do and a maximum of 4 minutes to play'
 --- !u!222 &1157322201
 CanvasRenderer:
   m_ObjectHideFlags: 0
