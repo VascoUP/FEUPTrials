@@ -610,8 +610,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabManager: {fileID: 983211178}
-  spTimeLimit: 120
-  spFaultLimit: 10
+  spTimeLimit: 240
+  spFaultLimit: 15
 --- !u!4 &894664093
 Transform:
   m_ObjectHideFlags: 0

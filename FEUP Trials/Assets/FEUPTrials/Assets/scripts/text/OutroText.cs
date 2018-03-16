@@ -43,7 +43,6 @@ public class OutroText : MonoBehaviour {
             {
                 if (Time.time >= nextTime)
                 {
-                    Debug.Log(lines[line]);
                     label.text += lines[line][cursor];
                     cursor++;
                     nextTime = Time.time + textRate;
