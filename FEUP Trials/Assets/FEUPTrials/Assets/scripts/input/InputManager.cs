@@ -57,6 +57,6 @@ public class InputManager {
 
     public static bool IsNext()
     {
-        return Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0);
+        return Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0);
     }
 }
