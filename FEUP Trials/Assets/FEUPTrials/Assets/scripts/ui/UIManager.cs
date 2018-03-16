@@ -49,6 +49,9 @@ public class UIManager : MonoBehaviour {
     [SerializeField]
     private Button _mpMainMenuButton;
 
+    // Dirty hack
+    private bool won;
+
     private void Start()
     {
         _resumeButton.onClick.AddListener(() =>
@@ -115,7 +118,8 @@ public class UIManager : MonoBehaviour {
     
     private void ExitGame()
     {
-        GameManager.instance.ChangeState(new Outro());
+        if (won) GameManager.instance.ChangeState(new Outro());
+        else GameManager.instance.ChangeState(new MainMenu());
     }
 
     private void PauseMenu(bool isPause)
@@ -163,6 +167,9 @@ public class UIManager : MonoBehaviour {
 
     public void SPGameOver(bool won, PlayerStats stats)
     {
+        // Hackity hack
+        this.won = won;
+
         state = GameState.GAME_OVER;
 
         SetTimerPanel(false);
